@@ -9,3 +9,7 @@
 
 # Temp files
 tmp/*
+
+# Ignore vim's swap files
+.*.sw?
+
