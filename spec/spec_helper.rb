@@ -9,9 +9,14 @@ Dir[SPEC_ROOT.join("shared/*.rb").to_s].each(&method(:require))
 
 require SPEC_ROOT.join("../system/medlibra/container")
 
+require "webmock/rspec"
+require "dry/container/stub"
+Medlibra::Container.enable_stubs!
+
 RSpec.configure do |config|
   config.disable_monkey_patching!
 
+  config.include Test::Utils
   config.expect_with :rspec do |expectations|
     # This option will default to `true` in RSpec 4.
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
@@ -59,3 +64,4 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 end
+

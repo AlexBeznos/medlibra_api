@@ -10,6 +10,8 @@ module Medlibra
 
     opts[:root] = Pathname(__FILE__).join("../..").realpath.dirname
 
+    use Container['middlewares.auth'].class
+
     plugin :error_handler
     plugin :json
     plugin :json_parser

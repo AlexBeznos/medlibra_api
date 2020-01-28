@@ -25,6 +25,10 @@ gem "dry-monads"
 gem "dry-struct"
 gem "dry-types"
 gem "dry-validation"
+gem "concurrent-ruby"
+gem "jwt"
+gem "curb"
+gem "oj"
 
 group :development, :test do
   gem "pry-byebug", platform: :mri
@@ -35,10 +39,9 @@ group :development do
 end
 
 group :test do
-  gem "capybara"
-  gem "capybara-screenshot"
+  gem "rack-test"
+  gem "webmock"
   gem "database_cleaner"
-  gem "poltergeist"
   gem "rspec"
   gem "rom-factory", "~> 0.10"
 end

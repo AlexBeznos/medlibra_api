@@ -1,6 +1,7 @@
 require "dry/web/container"
 require "dry/system/components"
-require 'dry-monitor'
+require "dry-monitor"
+
 Dry::Monitor.load_extensions(:rack)
 
 module Medlibra

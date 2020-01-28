@@ -36,6 +36,7 @@ CREATE TABLE public.schema_migrations (
 CREATE TABLE public.users (
     id integer NOT NULL,
     username text NOT NULL,
+    uid text NOT NULL,
     learning_intensity text DEFAULT 'light'::text NOT NULL,
     helper_notifications_enabled boolean DEFAULT false NOT NULL,
     changes_notifications_enabled boolean DEFAULT false NOT NULL,
@@ -72,6 +73,14 @@ ALTER TABLE ONLY public.schema_migrations
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users users_uid_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_uid_key UNIQUE (uid);
 
 
 --

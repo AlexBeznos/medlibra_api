@@ -6,5 +6,6 @@ Medlibra::Container.boot :settings, from: :system do
   settings do
     key :session_secret, Types::Strict::String.constrained(filled: true)
     key :database_url, Types::Strict::String.constrained(filled: true)
+    key :firebase_project_id, Types::Strict::String.constrained(filled: true)
   end
 end

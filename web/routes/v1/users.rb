@@ -4,7 +4,7 @@ class Medlibra::Web
       r.on "users" do
         r.post do 
           r.resolve "transactions.users.create" do |create|
-            result = create.(params: r.params)
+            result = create.(params: r.params.merge(uid: r.env["firebase.uid"]))
 
             if result.success?
               r.halt(200)
