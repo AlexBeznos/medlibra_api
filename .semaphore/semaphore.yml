@@ -29,15 +29,15 @@ blocks:
         - name: rubocop
           commands:
           - checkout
-          - cache restore
           - sem-version ruby 2.7.0
+          - cache restore
           - bundle exec rubocop
         - name: rspec
           commands:
           - checkout
-          - cache restore
           - sem-version ruby 2.7.0
           - sem-service start postgres 11
+          - cache restore
           - bundle exec rake db:drop db:create db:migrate  
           - bundle exec rake
 
