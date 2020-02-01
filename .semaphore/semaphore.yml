@@ -1,10 +1,16 @@
 version: v1.0
 name: Medlibra API
-
 agent:
   machine:
     type: e1-standard-2
     os_image: ubuntu1804
+
+execution_time_limit:
+  minutes: 20
+
+auto_cancel:
+  running:
+    when: "true"
 
 blocks:
   - name: Setup
@@ -19,10 +25,6 @@ blocks:
           - cache store
   - name: Run
     task:
-      agent:
-        machine:
-          type: e1-standard-2
-          os_image: ubuntu1804
       secrets:
         - name: MedlibraAPI
       prologue:
@@ -40,5 +42,19 @@ blocks:
           - sem-service start postgres 11
           - bundle exec rake db:drop db:create db:migrate  
           - bundle exec rake
+          - artifact push coverage coverage/coverage.json
+  - name: Notify
+    task:
+      secrets:
+        - name: MedlibraAPI
+      jobs:
+        - name: danger
+          commands:
+          - checkout
+          - cache restore
+          - bundle install --jobs=3 --retry=3 --deployment --path=${bundle_path:-vendor/bundle}
+          - sem-version ruby 2.7.0
+          - artifact pull coverage
+          - bundle exec danger
 
 

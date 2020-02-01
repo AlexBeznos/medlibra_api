@@ -1,0 +1,7 @@
+pre-commit:
+  parallel: true # It's for the future
+  commands:
+    rubocop:
+      files: git diff --name-only master
+      glob: "*.{rb}"
+      run: bundle exec rubocop {files}

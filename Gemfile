@@ -47,4 +47,8 @@ group :test do
   gem "rom-factory", "~> 0.10"
   gem "rspec"
   gem "webmock"
+  gem "simplecov", require: false
+  gem "simplecov-json", require: false
+  gem "danger"
+  gem "danger-simplecov_json"
 end
