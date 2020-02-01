@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ENV["RACK_ENV"] = "test"
 
 require "pry-byebug"
@@ -64,4 +66,3 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 end
-

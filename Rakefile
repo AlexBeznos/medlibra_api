@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "bundler/setup"
 require "pry-byebug" unless ENV["RACK_ENV"] == "production"
 require "rom/sql/rake_task"
@@ -54,7 +56,10 @@ namespace :db do
   task :create do
     if system("which createdb", out: File::NULL)
       uri = database_uri
-      system(postgres_env_vars(uri), "createdb #{Shellwords.escape(uri.path[1..-1])}")
+      system(
+        postgres_env_vars(uri),
+        "createdb #{Shellwords.escape(uri.path[1..-1])}",
+      )
     else
       puts "You must have Postgres installed to create a database"
       exit 1
@@ -65,7 +70,10 @@ namespace :db do
   task :drop do
     if system("which dropdb", out: File::NULL)
       uri = database_uri
-      system(postgres_env_vars(uri), "dropdb #{Shellwords.escape(uri.path[1..-1])}")
+      system(
+        postgres_env_vars(uri),
+        "dropdb #{Shellwords.escape(uri.path[1..-1])}",
+      )
     else
       puts "You must have Postgres installed to drop a database"
       exit 1
@@ -88,7 +96,11 @@ namespace :db do
     task :dump do
       if system("which pg_dump", out: File::NULL)
         uri = database_uri
-        system(postgres_env_vars(uri), "pg_dump -s -x -O #{Shellwords.escape(uri.path[1..-1])}", out: "db/structure.sql")
+        system(
+          postgres_env_vars(uri),
+          "pg_dump -s -x -O #{Shellwords.escape(uri.path[1..-1])}",
+          out: "db/structure.sql",
+        )
       else
         puts "You must have pg_dump installed to dump the database structure"
       end
@@ -101,7 +113,7 @@ namespace :db do
     load(seed_data) if File.exist?(seed_data)
   end
 
-  desc "Load a small, representative set of data so that the application can start in a useful state (for development)."
+  desc "Load a small, representative set of data so that the application can start in a useful state (for development)." # rubocop:disable Layout/LineLength
   task :sample_data do
     sample_data = File.join("db", "sample_data.rb")
     load(sample_data) if File.exist?(sample_data)

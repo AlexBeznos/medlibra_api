@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "dry/monads"
 require "dry/monads/do"
 require "medlibra/import"
@@ -31,12 +33,12 @@ module Medlibra
         end
 
         def create_user(params)
-          users_repo.
-            users.
-            changeset(:create, **params).
-            map(:add_timestamps).
-            commit
-          
+          users_repo
+            .users
+            .changeset(:create, **params)
+            .map(:add_timestamps)
+            .commit
+
           Success()
         end
       end

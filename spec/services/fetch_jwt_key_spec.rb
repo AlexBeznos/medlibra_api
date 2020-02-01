@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 require "medlibra/services/fetch_jwt_key"
 require "concurrent-ruby"
@@ -8,13 +10,13 @@ RSpec.describe Medlibra::Services::FetchJwtKey do
       keys_stub = Concurrent::Map.new
       Medlibra::Container.stub("utils.jwt_keys", keys_stub)
       stub_call_for_keys({ key_1: "cert_1" }.to_json)
-     
+
       result = Medlibra::Container["services.fetch_jwt_key"].("key_1")
 
       expect(result).to eq("cert_1")
-      
+
       Medlibra::Container.unstub("utils.jwt_keys")
-   end 
+    end
   end
 
   context "when prev keys expired" do
@@ -26,12 +28,12 @@ RSpec.describe Medlibra::Services::FetchJwtKey do
 
       Medlibra::Container.stub("utils.jwt_keys", keys_stub)
       stub_call_for_keys({ key_2: "cert_3" }.to_json)
-     
+
       result = Medlibra::Container["services.fetch_jwt_key"].("key_2")
 
       expect(result).to eq("cert_3")
       expect(keys_stub["key_1"]).to eq(nil)
-      
+
       Medlibra::Container.unstub("utils.jwt_keys")
     end
   end
@@ -45,23 +47,25 @@ RSpec.describe Medlibra::Services::FetchJwtKey do
       allow(keys_stub).to receive(:empty?).and_return(false)
       allow(keys_stub).to receive(:[]).with("exp_at").and_return(Time.now.to_i + 1200)
       allow(keys_stub).to receive(:[]).with(key).and_return("cert_1")
-      
+
       result = Medlibra::Container["services.fetch_jwt_key"].(key)
 
       expect(result).to eq("cert_1")
-      
+
       Medlibra::Container.unstub("utils.jwt_keys")
     end
   end
 
-  def stub_call_for_keys(body, headers: {}, cache: 24250, with_cache: true)
+  def stub_call_for_keys(body, headers: {}, cache: 24_250, with_cache: true)
     headers ||= {}
-    headers.merge!(
-      "cache-control" => "public, max-age=#{cache}, must-revalidate, no-transform",
-    ) if with_cache
+    if with_cache
+      headers.merge!(
+        "cache-control" => "public, max-age=#{cache}, must-revalidate, no-transform",
+      )
+    end
 
-    stub_request(:get, described_class::KEY_URL).
-      to_return(
+    stub_request(:get, described_class::KEY_URL)
+      .to_return(
         body: body,
         headers: headers,
       )

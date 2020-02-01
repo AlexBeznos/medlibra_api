@@ -9,4 +9,3 @@ module Medlibra
     end
   end
 end
-

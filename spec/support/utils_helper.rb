@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "jwt"
 require "oj"
 
@@ -28,4 +30,3 @@ module Test
     end
   end
 end
-

@@ -3,6 +3,7 @@ GEM
   specs:
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
+    ast (2.4.0)
     byebug (11.0.1)
     coderay (1.1.2)
     concurrent-ruby (1.1.5)
@@ -95,6 +96,7 @@ GEM
     i18n (1.8.2)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
+    jaro_winkler (1.5.4)
     jwt (2.2.1)
     listen (3.2.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
@@ -102,6 +104,9 @@ GEM
     method_source (0.9.2)
     nio4r (2.5.2)
     oj (3.10.1)
+    parallel (1.19.1)
+    parser (2.7.0.2)
+      ast (~> 2.4.0)
     pg (1.2.2)
     pry (0.12.2)
       coderay (~> 1.1.0)
@@ -117,6 +122,7 @@ GEM
       rack (>= 1.0, < 3)
     rack_csrf (2.6.0)
       rack (>= 1.1.0)
+    rainbow (3.0.0)
     rake (13.0.1)
     rb-fsevent (0.10.3)
     rb-inotify (0.10.1)
@@ -172,12 +178,21 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.9.0)
     rspec-support (3.9.2)
+    rubocop (0.79.0)
+      jaro_winkler (~> 1.5.1)
+      parallel (~> 1.10)
+      parser (>= 2.7.0.1)
+      rainbow (>= 2.2.2, < 4.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (>= 1.4.0, < 1.7)
+    ruby-progressbar (1.10.1)
     safe_yaml (1.0.5)
     sequel (5.28.0)
     sequel_postgresql_triggers (1.5.0)
       sequel
     thor (0.20.3)
     transproc (1.1.1)
+    unicode-display_width (1.6.1)
     webmock (3.8.0)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
@@ -212,6 +227,7 @@ DEPENDENCIES
   rom-factory (~> 0.10)
   rom-sql (~> 3.1)
   rspec
+  rubocop
   sequel_postgresql_triggers
   webmock
 

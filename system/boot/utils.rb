@@ -1,4 +1,6 @@
-Medlibra::Container.boot :utils, namespace: true do |app|
+# frozen_string_literal: true
+
+Medlibra::Container.boot :utils, namespace: true do |_app|
   init do
     require "concurrent-ruby"
     require "jwt"

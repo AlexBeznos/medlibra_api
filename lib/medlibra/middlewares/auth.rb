@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 require "rack"
 require "medlibra/container"
 
 module Medlibra
   module Middlewares
     class Auth
-      AUTH_HEADER_NAME = "HTTP_AUTHORIZATION".freeze
-      TOKEN_TYPE = "Bearer".freeze
+      AUTH_HEADER_NAME = "HTTP_AUTHORIZATION"
+      TOKEN_TYPE = "Bearer"
       UNAUTHORIZED_STATUS = 401
 
       def initialize(app = nil)
@@ -19,7 +21,7 @@ module Medlibra
         type, token = auth_header.split("\s")
         return unauthorized if type != TOKEN_TYPE
 
-        payload, _ = Container["services.decode_jwt"].(token)
+        payload, = Container["services.decode_jwt"].(token)
         return unauthorized unless payload
 
         @app.call(env.merge("firebase.uid" => payload["sub"]))
@@ -28,9 +30,9 @@ module Medlibra
       private
 
       def fetch_auth_header(env)
-        Rack::Request.
-          new(env).
-          fetch_header(AUTH_HEADER_NAME)
+        Rack::Request
+          .new(env)
+          .fetch_header(AUTH_HEADER_NAME)
       rescue KeyError
         false
       end
@@ -45,4 +47,3 @@ module Medlibra
     end
   end
 end
-

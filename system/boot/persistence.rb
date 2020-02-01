@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Medlibra::Container.boot :persistence, namespace: true do |system|
   init do
     require "sequel"

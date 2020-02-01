@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Medlibra::Container.boot :settings, from: :system do
   before :init do
     require "types"

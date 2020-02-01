@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "dry/web/roda/application"
 require_relative "container"
 
@@ -5,12 +7,12 @@ module Medlibra
   class Web < Dry::Web::Roda::Application
     configure do |config|
       config.container = Container
-      config.routes = "web/routes".freeze
+      config.routes = "web/routes"
     end
 
     opts[:root] = Pathname(__FILE__).join("../..").realpath.dirname
 
-    use Container['middlewares.auth'].class
+    use Container["middlewares.auth"].class
 
     plugin :error_handler
     plugin :json
@@ -19,9 +21,7 @@ module Medlibra
     plugin :multi_route
     plugin :all_verbs
 
-    route do |r|
-      r.multi_route
-    end
+    route(&:multi_route)
 
     error do |e|
       self.class[:rack_monitor].instrument(:error, exception: e)

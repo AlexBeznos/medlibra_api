@@ -1,0 +1,45 @@
+AllCops:
+  TargetRubyVersion: 2.7
+
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: double_quotes
+
+Style/LambdaCall:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/TrailingCommaInArguments:
+  Enabled: true
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInArrayLiteral:
+  Enabled: true
+  EnforcedStyleForMultiline: comma
+
+Lint/SuppressedException:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - "Rakefile"
+    - "spec/**/*.rb"
+
+Metrics/MethodLength:
+  Exclude:
+    - "spec/**/*.rb"
+
+Metrics/ClassLength:
+  Exclude:
+    - "spec/**/*.rb"
+
+Metrics/AbcSize:
+  Exclude:
+    - "spec/**/*.rb"
+
+Layout/LineLength:
+  Exclude:
+    - "spec/**/*.rb"
+

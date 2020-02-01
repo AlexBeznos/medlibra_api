@@ -16,4 +16,3 @@ module Persistence
     end
   end
 end
-
