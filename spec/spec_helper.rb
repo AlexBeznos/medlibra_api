@@ -4,9 +4,7 @@ ENV["RACK_ENV"] = "test"
 
 require "pry-byebug"
 require "simplecov"
-require "simplecov-json"
 SimpleCov.start
-SimpleCov.formatter = SimpleCov::Formatter::JSONFormatter
 
 SPEC_ROOT = Pathname(__FILE__).dirname
 

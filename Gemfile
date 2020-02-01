@@ -43,12 +43,10 @@ end
 
 group :test do
   gem "danger"
-  gem "danger-simplecov_json"
   gem "database_cleaner"
   gem "rack-test"
   gem "rom-factory", "~> 0.10"
   gem "rspec"
   gem "simplecov", require: false
-  gem "simplecov-json", require: false
   gem "webmock"
 end

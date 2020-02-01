@@ -56,5 +56,3 @@ blocks:
           - sem-version ruby 2.7.0
           - artifact pull coverage
           - bundle exec danger
-
-
