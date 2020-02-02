@@ -1,0 +1,122 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "medlibra",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.medlibra.app"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "put": {
+        "summary": "Should be hit after user chose krok and fiend",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "put-users",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "krokTypeId": {
+                    "type": "number"
+                  },
+                  "fieldId": {
+                    "type": "number"
+                  },
+                  "learningIntensity": {
+                    "type": "string"
+                  },
+                  "helperNotificationsEnabled": {
+                    "type": "boolean"
+                  },
+                  "changesNotificationsEnabled": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Should be hit right after user authenticated",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "post-users",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dictionary": {
+      "get": {
+        "summary": "Map of krok types to fields",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "fields": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "number"
+                        },
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-dictionary"
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "API Key": {
+        "type": "http",
+        "scheme": "Bearer"
+      }
+    }
+  }
+}
