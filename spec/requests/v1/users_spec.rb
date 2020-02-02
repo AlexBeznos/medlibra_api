@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "securerandom"
 require "web_spec_helper"
 
@@ -15,7 +17,7 @@ RSpec.describe "v1/users", type: :request do
 
         expect(last_response).to be_successful
       end
-      
+
       it "creates users record" do
         users_repo = Medlibra::Container["repositories.users_repo"]
         params = { username: "@hello" }
@@ -25,9 +27,9 @@ RSpec.describe "v1/users", type: :request do
 
         header "Authorization", "Bearer #{jwt_token}"
 
-        expect {
+        expect do
           post "v1/users", params
-        }.to change(users_repo.users, :count).from(0).to(1)
+        end.to change(users_repo.users, :count).from(0).to(1)
         expect(users_repo.users.one.to_h).to include(username: "@hello", uid: uid)
       end
     end
@@ -54,9 +56,9 @@ RSpec.describe "v1/users", type: :request do
 
         header "Authorization", "Bearer #{jwt_token}"
 
-        expect {
+        expect do
           post "v1/users", params
-        }.not_to change(users_repo.users, :count)
+        end.not_to change(users_repo.users, :count)
       end
 
       it "return errors" do
@@ -67,15 +69,15 @@ RSpec.describe "v1/users", type: :request do
 
         header "Authorization", "Bearer #{jwt_token}"
         post "v1/users", params
-        
-        expect(JSON.parse(last_response.body)).to eq({"errors" => { "username" => ["must be a string"] }})
+
+        expect(JSON.parse(last_response.body)).to eq("errors" => { "username" => ["must be a string"] })
       end
     end
 
     context "when user not authenticated" do
       it "returns 401" do
         params = { username: "@hello" }
-        
+
         post "v1/users", params
 
         expect(last_response).to be_unauthorized

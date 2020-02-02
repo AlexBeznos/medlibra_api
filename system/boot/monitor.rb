@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Medlibra::Container.boot :monitor do
   init do
     require "dry/monitor/sql/logger"

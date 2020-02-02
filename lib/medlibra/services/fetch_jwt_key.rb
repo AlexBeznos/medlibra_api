@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "medlibra/import"
 
 module Medlibra
@@ -5,7 +7,7 @@ module Medlibra
     class FetchJwtKey
       KEY_URL = "https://www.googleapis.com/"\
                 "robot/v1/metadata/x509/"\
-                "securetoken@system.gserviceaccount.com".freeze
+                "securetoken@system.gserviceaccount.com"
 
       include Import[
         "utils.curl",
@@ -35,9 +37,9 @@ module Medlibra
       end
 
       def get_exp_at(header_str)
-        cache_str = header_str.
-          split(/[\r\n]+/).
-          find(&method(:cache_control_matcher))
+        cache_str = header_str
+                    .split(/[\r\n]+/)
+                    .find(&method(:cache_control_matcher))
 
         exp_in = cache_str.match(/max\-age\=(\d+)\,/)
         return unless exp_in

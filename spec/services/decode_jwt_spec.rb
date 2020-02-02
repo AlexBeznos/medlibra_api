@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 require "medlibra/services/decode_jwt"
 require "medlibra/services/fetch_jwt_key"
@@ -25,14 +27,14 @@ RSpec.describe Medlibra::Services::DecodeJwt do
       Medlibra::Container.stub("validations.jwt.header", header_validator)
       Medlibra::Container.stub("validations.jwt.payload", payload_validator)
 
-      allow(header_validator).
-        to receive(:call).
-        with(header).
-        and_return(validation_result)
+      allow(header_validator)
+        .to receive(:call)
+        .with(header)
+        .and_return(validation_result)
       allow(validation_result).to receive(:success?).and_return(false)
-      allow(payload_validator).
-        to receive(:call).
-        with(payload)
+      allow(payload_validator)
+        .to receive(:call)
+        .with(payload)
 
       result = Medlibra::Container["services.decode_jwt"].(token)
 
@@ -59,21 +61,21 @@ RSpec.describe Medlibra::Services::DecodeJwt do
       Medlibra::Container.stub("validations.jwt.payload", payload_validator)
       Medlibra::Container.stub("services.fetch_jwt_key", fetch_jwt_key)
 
-      allow(header_validator).
-        to receive(:call).
-        with(header).
-        and_return(header_validation_result)
-      allow(header_validation_result).
-        to receive(:success?).and_return(true)
-      allow(payload_validator).
-        to receive(:call).
-        with(payload).
-        and_return(payload_validation_result)
-      allow(payload_validation_result).
-        to receive(:success?).and_return(false)
-      allow(fetch_jwt_key).
-        to receive(:call).
-        with("asdasd")
+      allow(header_validator)
+        .to receive(:call)
+        .with(header)
+        .and_return(header_validation_result)
+      allow(header_validation_result)
+        .to receive(:success?).and_return(true)
+      allow(payload_validator)
+        .to receive(:call)
+        .with(payload)
+        .and_return(payload_validation_result)
+      allow(payload_validation_result)
+        .to receive(:success?).and_return(false)
+      allow(fetch_jwt_key)
+        .to receive(:call)
+        .with("asdasd")
 
       result = Medlibra::Container["services.decode_jwt"].(token)
 
@@ -101,22 +103,22 @@ RSpec.describe Medlibra::Services::DecodeJwt do
       Medlibra::Container.stub("validations.jwt.payload", payload_validator)
       Medlibra::Container.stub("services.fetch_jwt_key", fetch_jwt_key)
 
-      allow(header_validator).
-        to receive(:call).
-        with(header).
-        and_return(header_validation_result)
-      allow(header_validation_result).
-        to receive(:success?).and_return(true)
-      allow(payload_validator).
-        to receive(:call).
-        with(payload).
-        and_return(payload_validation_result)
-      allow(payload_validation_result).
-        to receive(:success?).and_return(true)
-      allow(fetch_jwt_key).
-        to receive(:call).
-        with("asdasd").
-        and_return(nil)
+      allow(header_validator)
+        .to receive(:call)
+        .with(header)
+        .and_return(header_validation_result)
+      allow(header_validation_result)
+        .to receive(:success?).and_return(true)
+      allow(payload_validator)
+        .to receive(:call)
+        .with(payload)
+        .and_return(payload_validation_result)
+      allow(payload_validation_result)
+        .to receive(:success?).and_return(true)
+      allow(fetch_jwt_key)
+        .to receive(:call)
+        .with("asdasd")
+        .and_return(nil)
 
       result = Medlibra::Container["services.decode_jwt"].(token)
 
@@ -145,22 +147,22 @@ RSpec.describe Medlibra::Services::DecodeJwt do
       Medlibra::Container.stub("validations.jwt.payload", payload_validator)
       Medlibra::Container.stub("services.fetch_jwt_key", fetch_jwt_key)
 
-      allow(header_validator).
-        to receive(:call).
-        with(header).
-        and_return(header_validation_result)
-      allow(header_validation_result).
-        to receive(:success?).and_return(true)
-      allow(payload_validator).
-        to receive(:call).
-        with(payload).
-        and_return(payload_validation_result)
-      allow(payload_validation_result).
-        to receive(:success?).and_return(true)
-      allow(fetch_jwt_key).
-        to receive(:call).
-        with(certs.first.first).
-        and_return(certs.to_a.last.last)
+      allow(header_validator)
+        .to receive(:call)
+        .with(header)
+        .and_return(header_validation_result)
+      allow(header_validation_result)
+        .to receive(:success?).and_return(true)
+      allow(payload_validator)
+        .to receive(:call)
+        .with(payload)
+        .and_return(payload_validation_result)
+      allow(payload_validation_result)
+        .to receive(:success?).and_return(true)
+      allow(fetch_jwt_key)
+        .to receive(:call)
+        .with(certs.first.first)
+        .and_return(certs.to_a.last.last)
 
       result = Medlibra::Container["services.decode_jwt"].(token)
 
@@ -189,22 +191,22 @@ RSpec.describe Medlibra::Services::DecodeJwt do
       Medlibra::Container.stub("validations.jwt.payload", payload_validator)
       Medlibra::Container.stub("services.fetch_jwt_key", fetch_jwt_key)
 
-      allow(header_validator).
-        to receive(:call).
-        with(header).
-        and_return(header_validation_result)
-      allow(header_validation_result).
-        to receive(:success?).and_return(true)
-      allow(payload_validator).
-        to receive(:call).
-        with(payload).
-        and_return(payload_validation_result)
-      allow(payload_validation_result).
-        to receive(:success?).and_return(true)
-      allow(fetch_jwt_key).
-        to receive(:call).
-        with("asdasd").
-        and_return(cert.to_pem)
+      allow(header_validator)
+        .to receive(:call)
+        .with(header)
+        .and_return(header_validation_result)
+      allow(header_validation_result)
+        .to receive(:success?).and_return(true)
+      allow(payload_validator)
+        .to receive(:call)
+        .with(payload)
+        .and_return(payload_validation_result)
+      allow(payload_validation_result)
+        .to receive(:success?).and_return(true)
+      allow(fetch_jwt_key)
+        .to receive(:call)
+        .with("asdasd")
+        .and_return(cert.to_pem)
 
       rpayload, rheader = Medlibra::Container["services.decode_jwt"].(token)
 

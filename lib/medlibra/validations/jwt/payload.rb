@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "dry/validation"
 require "medlibra/container"
 
@@ -5,11 +7,11 @@ module Medlibra
   module Validations
     module Jwt
       class Payload < Dry::Validation::Contract
-        PROJECT_ID = Medlibra::Container["settings"].
-          firebase_project_id.
-          freeze
+        PROJECT_ID = Medlibra::Container["settings"]
+                     .firebase_project_id
+                     .freeze
 
-        ISSUER_HOST = "https://securetoken.google.com".freeze
+        ISSUER_HOST = "https://securetoken.google.com"
 
         ISSUER = [
           ISSUER_HOST,
@@ -37,7 +39,9 @@ module Medlibra
         end
 
         rule(:exp) do
-          key.failure("must be in future") unless Time.now < Time.at(values[:exp])
+          unless Time.now < Time.at(values[:exp])
+            key.failure("must be in future")
+          end
         end
 
         rule(:iat) do
@@ -45,7 +49,9 @@ module Medlibra
         end
 
         rule(:auth_time) do
-          key.failure("must be in past") unless Time.now > Time.at(values[:auth_time])
+          unless Time.now > Time.at(values[:auth_time])
+            key.failure("must be in past")
+          end
         end
       end
     end

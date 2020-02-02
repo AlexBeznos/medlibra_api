@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "securerandom"
 require "oj"
 
@@ -14,7 +16,7 @@ RSpec.shared_context "authorization" do
       fetch_jwt_key_double,
     )
   end
-  
+
   after { Medlibra::Container.unstub("services.fetch_jwt_key") }
 
   def certs_fixture
@@ -22,20 +24,20 @@ RSpec.shared_context "authorization" do
   end
 
   def jwt_token_by(uid: SecureRandom.hex, kid: SecureRandom.hex)
-    allow(fetch_jwt_key_double).
-      to receive(:call).
-      with(kid).
-      and_return(certs_fixture["cert"])
+    allow(fetch_jwt_key_double)
+      .to receive(:call)
+      .with(kid)
+      .and_return(certs_fixture["cert"])
 
     prepare_jwt_token(
       { "alg" => "RS256", "kid" => kid },
-      { 
+      {
         "exp" => Time.now.to_i + 1300,
         "auth_time" => Time.now.to_i - 1300,
         "iat" => Time.now.to_i - 1300,
         "aud" => Medlibra::Container["validations.jwt.payload"].class::PROJECT_ID,
         "iss" => Medlibra::Container["validations.jwt.payload"].class::ISSUER,
-        "sub" => uid,
+        "sub" => uid
       },
       OpenSSL::PKey::RSA.new(certs_fixture["key"]),
     )

@@ -13,3 +13,5 @@ tmp/*
 # Ignore vim's swap files
 .*.sw?
 
+# Ignore coverage
+coverage/*

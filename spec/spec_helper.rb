@@ -1,6 +1,10 @@
+# frozen_string_literal: true
+
 ENV["RACK_ENV"] = "test"
 
 require "pry-byebug"
+require "simplecov"
+SimpleCov.start
 
 SPEC_ROOT = Pathname(__FILE__).dirname
 
@@ -64,4 +68,3 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 end
-
