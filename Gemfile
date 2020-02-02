@@ -42,7 +42,6 @@ group :development do
 end
 
 group :test do
-  gem "danger"
   gem "database_cleaner"
   gem "rack-test"
   gem "rom-factory", "~> 0.10"
