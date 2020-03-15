@@ -135,15 +135,15 @@ GEM
     roda (3.28.0)
       rack
     roda-flow (0.4.0)
-    rom (5.2.1)
-      rom-changeset (~> 5.2)
-      rom-core (~> 5.2)
-      rom-repository (~> 5.2)
+    rom (5.2.2)
+      rom-changeset (~> 5.2, >= 5.2.1)
+      rom-core (~> 5.2, >= 5.2.2)
+      rom-repository (~> 5.2, >= 5.2.2)
     rom-changeset (5.2.1)
       dry-core (~> 0.4)
       rom-core (~> 5.2)
       transproc (~> 1.0, >= 1.1.0)
-    rom-core (5.2.1)
+    rom-core (5.2.2)
       concurrent-ruby (~> 1.1)
       dry-container (~> 0.7)
       dry-core (~> 0.4)
@@ -158,10 +158,10 @@ GEM
       dry-core (~> 0.4)
       faker (>= 1.7, < 3.0)
       rom-core (~> 5.0)
-    rom-repository (5.2.1)
+    rom-repository (5.2.2)
       dry-core (~> 0.4)
       dry-initializer (~> 3.0, >= 3.0.1)
-      rom-core (~> 5.2)
+      rom-core (~> 5.2, >= 5.2.2)
     rom-sql (3.2.0)
       dry-core (~> 0.4)
       dry-equalizer (~> 0.2)
@@ -231,7 +231,7 @@ DEPENDENCIES
   rack_csrf
   rake
   rerun
-  rom (~> 5.1)
+  rom (~> 5.2)
   rom-factory (~> 0.10)
   rom-sql (~> 3.1)
   rspec
