@@ -2,20 +2,33 @@
 
 module Medlibra
   class Web
-    route do |r|
-      r.on "v1" do
-        r.on "users" do
-          r.post do
-            r.resolve "transactions.users.create" do |create|
-              result = create.(
-                params: r.params.merge(uid: r.env["firebase.uid"]),
-              )
+    route "users" do |r| # rubocop:disable Metrics/BlockLength
+      r.is do
+        r.post do
+          r.resolve "transactions.users.create" do |create|
+            result = create.(
+              params: r.params.merge(uid: r.env["firebase.uid"]),
+            )
 
-              if result.success?
-                r.halt(200)
-              else
-                r.halt(422, errors: result.failure)
-              end
+            if result.success?
+              r.halt(200)
+            else
+              r.halt(422, errors: result.failure)
+            end
+          end
+        end
+
+        r.put do
+          r.resolve "transactions.users.update" do |create|
+            result = create.(
+              params: r.params,
+              uid: r.env["firebase.uid"],
+            )
+
+            if result.success?
+              r.halt(200)
+            else
+              r.halt(422, errors: result.failure)
             end
           end
         end

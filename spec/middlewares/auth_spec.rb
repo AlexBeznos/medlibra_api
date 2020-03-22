@@ -16,7 +16,7 @@ RSpec.describe Medlibra::Middlewares::Auth do
   context "when header have incorrect type" do
     it "return status 401" do
       env = {
-        "HTTP_AUTHORIZATION" => "Basic somefakedata"
+        "HTTP_AUTHORIZATION" => "Basic somefakedata",
       }
 
       status, = described_class.new.call(env)
@@ -28,7 +28,7 @@ RSpec.describe Medlibra::Middlewares::Auth do
   context "when jwt token decode failed" do
     it "return status 401" do
       env = {
-        "HTTP_AUTHORIZATION" => "Bearer expiredtoken"
+        "HTTP_AUTHORIZATION" => "Bearer expiredtoken",
       }
       decoder_instance = instance_double(Medlibra::Services::DecodeJwt)
       Medlibra::Container.stub(
@@ -52,7 +52,7 @@ RSpec.describe Medlibra::Middlewares::Auth do
     it "call app with updated env" do
       app = instance_double("Roda app")
       env = {
-        "HTTP_AUTHORIZATION" => "Bearer token"
+        "HTTP_AUTHORIZATION" => "Bearer token",
       }
       decoder_instance = instance_double(Medlibra::Services::DecodeJwt)
       expected_env = env.merge("firebase.uid" => "123123")

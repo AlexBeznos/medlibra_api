@@ -37,7 +37,7 @@ RSpec.shared_context "authorization" do
         "iat" => Time.now.to_i - 1300,
         "aud" => Medlibra::Container["validations.jwt.payload"].class::PROJECT_ID,
         "iss" => Medlibra::Container["validations.jwt.payload"].class::ISSUER,
-        "sub" => uid
+        "sub" => uid,
       },
       OpenSSL::PKey::RSA.new(certs_fixture["key"]),
     )

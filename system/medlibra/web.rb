@@ -16,12 +16,16 @@ module Medlibra
 
     plugin :error_handler
     plugin :json
-    plugin :json_parser
+    plugin :json_parser, parser: Container["services.parse_request_body"]
     plugin :halt
     plugin :multi_route
     plugin :all_verbs
 
-    route(&:multi_route)
+    route do |r|
+      r.on "v1" do
+        r.multi_route
+      end
+    end
 
     error do |e|
       self.class[:rack_monitor].instrument(:error, exception: e)
