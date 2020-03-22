@@ -17,7 +17,7 @@ gem "rack", ">= 2.0"
 
 # Database persistence
 gem "pg"
-gem "rom", "~> 5.1"
+gem "rom", "~> 5.2"
 gem "rom-sql", "~> 3.1"
 gem "sequel_postgresql_triggers"
 
