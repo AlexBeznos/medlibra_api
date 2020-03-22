@@ -12,6 +12,11 @@ module Persistence
         attribute :learning_intensity, ::Types::LearningIntensities
 
         use :timestamps
+
+        associations do
+          belongs_to :krok
+          belongs_to :field
+        end
       end
     end
   end

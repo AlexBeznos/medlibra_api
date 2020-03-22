@@ -12,6 +12,7 @@ require SPEC_ROOT.join("../system/boot").realpath
 RSpec.configure do |config|
   config.include Rack::Test::Methods, type: :request
   config.include Test::WebHelpers
+  config.include Shared::Web::TestHelpers, type: :request
   config.include_context "authorization", type: :request
 
   config.before :suite do
