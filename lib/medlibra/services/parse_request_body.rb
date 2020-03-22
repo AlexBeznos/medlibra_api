@@ -16,7 +16,7 @@ module Medlibra
 
       private
 
-      def deep_transform_keys(input) # rubocop:disable MethodLength
+      def deep_transform_keys(input) # rubocop:disable Metrics/MethodLength
         case input
         when Array
           input.map(&method(:deep_transform_keys))

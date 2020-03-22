@@ -2,7 +2,7 @@
 
 module Medlibra
   class Web
-    route "users" do |r| # rubocop:disable BlockLength
+    route "users" do |r| # rubocop:disable Metrics/BlockLength
       r.is do
         r.post do
           r.resolve "transactions.users.create" do |create|
