@@ -11,4 +11,8 @@ module Types
     "normal",
     "hard",
   )
+  AssessmentTypes = Types::Strict::String.enum(
+    "exam",
+    "training",
+  )
 end
