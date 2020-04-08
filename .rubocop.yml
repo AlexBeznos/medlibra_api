@@ -30,20 +30,29 @@ Metrics/BlockLength:
   Exclude:
     - "Rakefile"
     - "spec/**/*.rb"
+    - "db/seed.rb"
 
 Metrics/MethodLength:
   Exclude:
     - "spec/**/*.rb"
+    - "db/seed.rb"
 
 Metrics/ClassLength:
   Exclude:
     - "spec/**/*.rb"
+    - "db/seed.rb"
 
 Metrics/AbcSize:
   Exclude:
     - "spec/**/*.rb"
+    - "db/seed.rb"
 
 Layout/LineLength:
   Exclude:
     - "spec/**/*.rb"
+    - "db/seed.rb"
+
+Metrics/ParameterLists:
+  Exclude:
+    - "db/seed.rb"
 
