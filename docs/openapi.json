@@ -19,7 +19,7 @@
             "description": "OK"
           }
         },
-        "operationId": "put-users",
+        "operationId": "update-user",
         "requestBody": {
           "content": {
             "application/json": {
@@ -55,7 +55,7 @@
             "description": "OK"
           }
         },
-        "operationId": "post-users",
+        "operationId": "create-user",
         "requestBody": {
           "content": {
             "application/json": {
