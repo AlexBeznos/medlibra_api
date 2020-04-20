@@ -20,7 +20,7 @@ blocks:
           commands:
           - checkout
           - cache restore
-          - sem-version ruby 2.7.0
+          - sem-version ruby 2.7.1
           - bundle install --deployment -j 4 --path vendor/bundle
           - cache store
   - name: Run
