@@ -38,7 +38,7 @@
                   "helperNotificationsEnabled": {
                     "type": "boolean"
                   },
-                  changesNotificationsEnabled": {
+                  "changesNotificationsEnabled": {
                     "type": "boolean"
                   },
                   "theme": {
