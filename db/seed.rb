@@ -231,3 +231,10 @@ Dir["./db/seed_data/testkrok/*"].each do |file_path|
 
   Filler.new.(data)
 end
+
+Dir["./db/seed_data/testukr/*"].each do |file_path|
+  file = File.read(file_path)
+  data = Medlibra::Container["utils.oj"].load(file)
+
+  Filler.new.(data)
+end
