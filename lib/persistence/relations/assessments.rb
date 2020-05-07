@@ -8,6 +8,7 @@ module Persistence
       schema(:assessments, infer: true) do
         attribute :id, ::Types::Strict::Integer
         attribute :type, ::Types::AssessmentTypes
+        attribute :questions_amount, ::Types::Strict::Integer
 
         primary_key :id
 

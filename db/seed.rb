@@ -129,7 +129,10 @@ class Filler
     assessment ||= assessments_repo
                    .assessments
                    .command(:create)
-                   .call(assessment_params)
+                   .call(
+                     assessment_params
+                       .merge(questions_amount: questions.count),
+                   )
 
     questions.each do |question|
       qrecord = create_question(question)
