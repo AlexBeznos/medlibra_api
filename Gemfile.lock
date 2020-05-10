@@ -221,6 +221,7 @@ DEPENDENCIES
   dry-validation
   dry-web
   dry-web-roda
+  faker
   jwt
   oj
   pg

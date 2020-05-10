@@ -91,7 +91,7 @@ RSpec.describe "v1/exams", type: :request do
         expect(last_response.status).to eq(422)
         parsed = JSON.parse(last_response.body)
 
-        expect(parsed["error"]).to eq("user doesn't exist")
+        expect(parsed["errors"]).to eq(["user doesn't exist"])
       end
     end
   end

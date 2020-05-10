@@ -13,7 +13,7 @@ module Persistence
 
         associations do
           has_one :assessment_questions
-          has_one :assessment, through: :assessment_questions
+          has_one :assessments, through: :assessment_questions
         end
       end
     end

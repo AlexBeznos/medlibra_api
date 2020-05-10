@@ -15,7 +15,7 @@ module Medlibra
         if user
           Success(user)
         else
-          Failure(error: "user doesn't exist")
+          Failure(["user doesn't exist"])
         end
       end
     end

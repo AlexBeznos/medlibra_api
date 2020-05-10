@@ -2,12 +2,13 @@
 
 module Medlibra
   class Web
-    route "exams" do |r|
+    route "bookmarks" do |r|
       r.is do
         r.get do
           r.resolve_with_handling(
-            "transactions.exams.get",
-            uid: env["firebase.uid"],
+            "transactions.bookmarks.get",
+            params: r.params,
+            uid: r.env["firebase.uid"],
           )
         end
       end

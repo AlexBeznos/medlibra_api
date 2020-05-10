@@ -14,6 +14,7 @@ Dir[SPEC_ROOT.join("shared/*.rb").to_s].each(&method(:require))
 require SPEC_ROOT.join("../system/medlibra/container")
 
 require "webmock/rspec"
+require "faker"
 require "dry/container/stub"
 Medlibra::Container.enable_stubs!
 
