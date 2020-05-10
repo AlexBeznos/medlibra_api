@@ -19,6 +19,12 @@ module Persistence
           belongs_to :year
         end
       end
+
+      def exams_page(krok_id:, field_id:)
+        where(type: ::Types::AssessmentTypes["exam"])
+          .where(krok_id: krok_id)
+          .where(field_id: field_id)
+      end
     end
   end
 end

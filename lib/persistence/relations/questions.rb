@@ -10,6 +10,11 @@ module Persistence
         attribute :title, ::Types::Strict::String
 
         primary_key :id
+
+        associations do
+          has_one :assessment_questions
+          has_one :assessment, through: :assessment_questions
+        end
       end
     end
   end

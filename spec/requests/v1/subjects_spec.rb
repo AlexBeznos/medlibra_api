@@ -3,9 +3,9 @@
 require "web_spec_helper"
 require "oj"
 
-RSpec.xdescribe "v1/subjects", type: :request do
+RSpec.describe "v1/subjects", type: :request do
   describe "#GET" do
-    it "returns exams by year" do
+    it "returns all subjects by user's krok and field" do
       uid = SecureRandom.hex
       kid = SecureRandom.hex
       jwt_token = jwt_token_by(uid: uid, kid: kid)
@@ -66,12 +66,6 @@ RSpec.xdescribe "v1/subjects", type: :request do
         krok2 = Factory[:krok]
         field2 = Factory[:field, krok_id: krok2.id]
         year2 = Factory[:year]
-        Factory[
-          :user,
-          uid: uid,
-          krok_id: krok1.id,
-          field_id: field1.id,
-        ]
 
         Array.new(3) do
           subj = Factory[:subfield]

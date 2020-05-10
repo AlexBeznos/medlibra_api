@@ -11,48 +11,25 @@ module Medlibra
         include Dry::Monads[:result]
         include Dry::Monads::Do.for(:call)
         include Import[
-          "repositories.users_repo",
-          "repositories.assessments_repo",
+          "repositories.subfields_repo",
+          "services.find_user"
         ]
 
         def call(uid:)
-          user = yield get_user(uid)
-          subjects = yield get_subjects(user)
+          user = yield find_user.(uid)
+          subjects = get_subjects(user)
 
-          Success(serialize_subjects(subjects))
+          Success(subjects.map(&:to_h))
         end
 
         private
 
-        def get_user(uid)
-          user = users_repo.by_uid(uid)
-
-          if user
-            Success(user)
-          else
-            Failure(error: "user doesn't exist")
-          end
-        end
-
         def get_subjects(user)
-          exams = assessments_repo.exams(
-            krok_id: user.krok_id,
-            field_id: user.field_id,
-          )
-
-          Success(exams)
-        end
-
-        def serialize_exams(exams)
-          exams.map do |exam|
-            {
-              id: exam.id,
-              year: exam.year.name,
-              amount: exam.questions_amount,
-              triesAmount: 0,
-              score: 0,
-            }
-          end
+          subfields_repo
+            .subjects_page(
+              krok_id: user.krok_id,
+              field_id: user.field_id,
+            )
         end
       end
     end
