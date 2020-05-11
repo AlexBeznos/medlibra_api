@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "web_spec_helper"
-require "oj"
 
 RSpec.describe "v1/dictionary", type: :request do
   describe "#GET" do

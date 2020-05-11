@@ -48,7 +48,8 @@
                 }
               }
             }
-          }
+          },
+          "description": ""
         },
         "description": ""
       },
@@ -441,6 +442,9 @@
                           "type": {
                             "type": "string",
                             "description": "can be training or exam. if training subfield should be taken, otherwise write exam(Буклет)"
+                          },
+                          "answer": {
+                            "type": "string"
                           }
                         }
                       }

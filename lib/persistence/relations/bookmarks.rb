@@ -16,16 +16,27 @@ module Persistence
         end
       end
 
-      def bookmarks_page(user)
-        where(user_id: user.id)
+      def bookmarks_page(user) # rubocop:disable Metrics/MethodLength
+        query =
+          where(user_id: user.id)
           .combine(
-            question: {
-              assessments: %i[
-                year
-                subfield
-              ],
-            },
-          ).order { created_at.desc }
+            question: [
+              :answers,
+              {
+                assessments: %i[
+                  year
+                  subfield
+                ],
+              },
+            ],
+          )
+
+        query =
+          query.node(question: :answers) do |answers|
+            answers.where(correct: true)
+          end
+
+        query.order { created_at.desc }
       end
     end
   end

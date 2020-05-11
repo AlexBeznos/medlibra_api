@@ -17,7 +17,7 @@ module Medlibra
           "repositories.bookmarks_repo",
           "services.find_user",
           "services.pagination_meta",
-          validate: "validations.bookmarks.for_pagination",
+          validate: "validations.for_pagination",
         ]
 
         def call(uid:, params:)
@@ -72,6 +72,7 @@ module Medlibra
               year: bookmark.question.assessments.year.name,
               subfield: bookmark.question.assessments.subfield&.name,
               type: bookmark.question.assessments.type,
+              answer: bookmark.question.answers.first.title,
             }
           end
         end
