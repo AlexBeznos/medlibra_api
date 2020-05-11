@@ -14,4 +14,9 @@ Factory.define :assessment do |f|
     d.type { "training" }
     d.association :subfield
   end
+
+  f.trait :training_exam do |d|
+    d.type { "training-exam" }
+    d.association :subfield
+  end
 end
