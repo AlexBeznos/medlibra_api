@@ -7,13 +7,18 @@ RSpec.describe "v1/dictionary", type: :request do
   describe "#GET" do
     it "returns krok types with included fields" do
       jwt_token, uid = make_jwt_token
-      Factory[:user, uid: uid]
       krok1 = Factory[:krok]
       krok2 = Factory[:krok]
       krok3 = Factory[:krok]
-      field_group1 = Array.new(3) { Factory[:field, krok_id: krok1.id] }
-      field_group2 = Array.new(3) { Factory[:field, krok_id: krok2.id] }
-      field_group3 = Array.new(3) { Factory[:field, krok_id: krok3.id] }
+      field_group1 = Array.new(3) { Factory[:field, krok: krok1] }
+      field_group2 = Array.new(3) { Factory[:field, krok: krok2] }
+      field_group3 = Array.new(3) { Factory[:field, krok: krok3] }
+      Factory[
+        :user,
+        uid: uid,
+        krok: krok1,
+        field: field_group1.first,
+      ]
       expected_result = [
         {
           "id" => krok1.id,

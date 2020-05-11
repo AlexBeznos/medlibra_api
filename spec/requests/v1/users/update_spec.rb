@@ -75,7 +75,7 @@ RSpec.describe "PUT v1/users", type: :request do
       context "when only field provided" do
         it "return error that field not exist" do
           jwt_token, uid = make_jwt_token
-          user = Factory[:user, uid: uid]
+          user = Factory[:user, uid: uid, krok_id: nil, field_id: nil]
           field = Factory[:field]
           params = { fieldId: field.id }
 
@@ -99,7 +99,7 @@ RSpec.describe "PUT v1/users", type: :request do
       context "when field not suited to krok" do
         it "returns proper error" do
           jwt_token, uid = make_jwt_token
-          user = Factory[:user, uid: uid]
+          user = Factory[:user, uid: uid, krok_id: nil, field_id: nil]
           krok = Factory[:krok]
           field = Factory[:field]
           params = {
