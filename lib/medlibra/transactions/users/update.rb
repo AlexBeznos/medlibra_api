@@ -21,7 +21,7 @@ module Medlibra
           values = yield validate(params.merge(user: user))
           yield update_user(user, values)
 
-          Success()
+          Success(204)
         end
 
         private

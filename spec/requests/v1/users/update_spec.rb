@@ -30,7 +30,7 @@ RSpec.describe "PUT v1/users", type: :request do
             params: params,
           )
 
-          expect(last_response).to be_successful
+          expect(last_response.status).to eq(204)
           expect(last_response.body).to be_empty
           next_user = find_user(user.id)
 
@@ -63,7 +63,7 @@ RSpec.describe "PUT v1/users", type: :request do
             params: params,
           )
 
-          expect(last_response.status).to eq(200)
+          expect(last_response.status).to eq(204)
           next_user = find_user(user.id)
 
           expect(next_user.created_at).to eq(user.created_at)

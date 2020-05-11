@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "roda"
+require "dry/monads/unit"
 
 class Roda
   module RodaPlugins
@@ -21,8 +22,11 @@ class Roda
         end
 
         def success(result)
-          if result.success.to_s == "Unit"
-            halt(200)
+          case result.success
+          when Dry::Monads::Unit
+            halt(201)
+          when Integer
+            halt(result.success)
           else
             halt(200, result.success)
           end
