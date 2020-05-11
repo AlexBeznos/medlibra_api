@@ -6,9 +6,7 @@ require "oj"
 RSpec.describe "v1/dictionary", type: :request do
   describe "#GET" do
     it "returns krok types with included fields" do
-      uid = SecureRandom.hex
-      kid = SecureRandom.hex
-      jwt_token = jwt_token_by(uid: uid, kid: kid)
+      jwt_token, uid = make_jwt_token
       Factory[:user, uid: uid]
       krok1 = Factory[:krok]
       krok2 = Factory[:krok]
@@ -49,14 +47,15 @@ RSpec.describe "v1/dictionary", type: :request do
         },
       ]
 
-      header "Authorization", "Bearer #{jwt_token}"
-      get "v1/dictionary"
+      make_request(
+        :get,
+        "v1/dictionary",
+        auth_code: jwt_token,
+      )
 
       expect(last_response).to be_successful
-
-      result = Oj.load(last_response.body)
-      expect(result).not_to be_empty
-      expect(result).to eq(expected_result)
+      expect(parsed_body).not_to be_empty
+      expect(parsed_body).to eq(expected_result)
     end
   end
 end

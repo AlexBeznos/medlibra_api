@@ -6,9 +6,7 @@ require "oj"
 RSpec.describe "v1/exams", type: :request do
   describe "#GET" do
     it "returns exams by year" do
-      uid = SecureRandom.hex
-      kid = SecureRandom.hex
-      jwt_token = jwt_token_by(uid: uid, kid: kid)
+      jwt_token, uid = make_jwt_token
       krok1 = Factory[:krok]
       field1 = Factory[:field, krok_id: krok1.id]
       krok2 = Factory[:krok]
@@ -43,24 +41,23 @@ RSpec.describe "v1/exams", type: :request do
         year_id: year4.id
       ]
 
-      header "Authorization", "Bearer #{jwt_token}"
-      get "v1/exams"
+      make_request(
+        :get,
+        "v1/exams",
+        auth_code: jwt_token,
+      )
 
       expect(last_response).to be_successful
-      parsed = JSON.parse(last_response.body)
-
-      expect(parsed.map { |d| d["id"] }).to eq(expected_ids)
-      expect(parsed.map { |d| d["year"] }).to eq(expected_years)
-      expect(parsed.map { |d| d["amount"] }).to eq(expected_amounts)
-      expect(parsed.map { |d| d["triesAmount"] }).to eq([0, 0, 0])
-      expect(parsed.map { |d| d["score"] }).to eq([0, 0, 0])
+      expect(parsed_body.map { |d| d["id"] }).to eq(expected_ids)
+      expect(parsed_body.map { |d| d["year"] }).to eq(expected_years)
+      expect(parsed_body.map { |d| d["amount"] }).to eq(expected_amounts)
+      expect(parsed_body.map { |d| d["triesAmount"] }).to eq([0, 0, 0])
+      expect(parsed_body.map { |d| d["score"] }).to eq([0, 0, 0])
     end
 
     context "when user is not yet registered" do
       it "returns error" do
-        uid = SecureRandom.hex
-        kid = SecureRandom.hex
-        jwt_token = jwt_token_by(uid: uid, kid: kid)
+        jwt_token, = make_jwt_token
         krok1 = Factory[:krok]
         field1 = Factory[:field, krok_id: krok1.id]
         krok2 = Factory[:krok]
@@ -85,13 +82,14 @@ RSpec.describe "v1/exams", type: :request do
           year_id: year4.id
         ]
 
-        header "Authorization", "Bearer #{jwt_token}"
-        get "v1/exams"
+        make_request(
+          :get,
+          "v1/exams",
+          auth_code: jwt_token,
+        )
 
         expect(last_response.status).to eq(422)
-        parsed = JSON.parse(last_response.body)
-
-        expect(parsed["errors"]).to eq(["user doesn't exist"])
+        expect(parsed_body.dig("errors", "user")).to eq(["is not exist"])
       end
     end
   end

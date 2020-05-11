@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "oj"
+
 require "spec_helper"
 require "medlibra/services/decode_jwt"
 require "medlibra/services/fetch_jwt_key"
@@ -133,7 +135,7 @@ RSpec.describe Medlibra::Services::DecodeJwt do
 
   context "when certificate is not suited" do
     it "return false" do
-      certs = JSON.parse(fixture_file("google_certs.json"))
+      certs = Oj.load(fixture_file("google_certs.json"))
       header = { "alg" => "RS256", "kid" => certs.first.first }
       payload = { "sub" => "id2323" }
       token = prepare_jwt_token(header, payload)

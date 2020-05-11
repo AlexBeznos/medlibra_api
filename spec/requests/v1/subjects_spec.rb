@@ -6,9 +6,7 @@ require "oj"
 RSpec.describe "v1/subjects", type: :request do
   describe "#GET" do
     it "returns all subjects by user's krok and field" do
-      uid = SecureRandom.hex
-      kid = SecureRandom.hex
-      jwt_token = jwt_token_by(uid: uid, kid: kid)
+      jwt_token, uid = make_jwt_token
       krok1 = Factory[:krok]
       field1 = Factory[:field, krok_id: krok1.id]
       year1 = Factory[:year]
@@ -45,21 +43,20 @@ RSpec.describe "v1/subjects", type: :request do
         year_id: year2.id
       ]
 
-      header "Authorization", "Bearer #{jwt_token}"
-      get "v1/subjects"
+      make_request(
+        :get,
+        "v1/subjects",
+        auth_code: jwt_token,
+      )
 
       expect(last_response).to be_successful
-      parsed = JSON.parse(last_response.body)
-
-      expect(parsed.map { |d| d["id"] }).to eq(expected_ids)
-      expect(parsed.map { |d| d["name"] }).to eq(expected_names)
+      expect(parsed_body.map { |d| d["id"] }).to eq(expected_ids)
+      expect(parsed_body.map { |d| d["name"] }).to eq(expected_names)
     end
 
     context "when user is not yet registered" do
       it "returns error" do
-        uid = SecureRandom.hex
-        kid = SecureRandom.hex
-        jwt_token = jwt_token_by(uid: uid, kid: kid)
+        jwt_token, = make_jwt_token
         krok1 = Factory[:krok]
         field1 = Factory[:field, krok_id: krok1.id]
         year1 = Factory[:year]
@@ -87,13 +84,14 @@ RSpec.describe "v1/subjects", type: :request do
           year_id: year2.id
         ]
 
-        header "Authorization", "Bearer #{jwt_token}"
-        get "v1/subjects"
+        make_request(
+          :get,
+          "v1/subjects",
+          auth_code: jwt_token,
+        )
 
         expect(last_response.status).to eq(422)
-        parsed = JSON.parse(last_response.body)
-
-        expect(parsed["errors"]).to eq(["user doesn't exist"])
+        expect(parsed_body.dig("errors", "user")).to eq(["is not exist"])
       end
     end
   end

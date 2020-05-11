@@ -4,9 +4,7 @@ require "web_spec_helper"
 
 RSpec.describe "GET v1/bookmarks", type: :request do
   it "returns bookmarks list" do
-    uid = SecureRandom.hex
-    kid = SecureRandom.hex
-    jwt_token = jwt_token_by(uid: uid, kid: kid)
+    jwt_token, uid = make_jwt_token
     krok1 = Factory[:krok]
     field1 = Factory[:field, krok_id: krok1.id]
     year1 = Factory[:year]
@@ -74,16 +72,18 @@ RSpec.describe "GET v1/bookmarks", type: :request do
       question: question3,
     ]
 
-    header "Authorization", "Bearer #{jwt_token}"
-    get "v1/bookmarks"
+    make_request(
+      :get,
+      "v1/bookmarks",
+      auth_code: jwt_token,
+    )
 
     expect(last_response.status).to eq(200)
-    parsed = JSON.parse(last_response.body)
 
-    expect(parsed["hasNext"]).to eq(false)
-    expect(parsed["hasPrev"]).to eq(false)
+    expect(parsed_body["hasNext"]).to eq(false)
+    expect(parsed_body["hasPrev"]).to eq(false)
 
-    questions = parsed["questions"]
+    questions = parsed_body["questions"]
 
     expect(questions.count).to eq(3)
     questions.each do |q|
@@ -110,9 +110,7 @@ RSpec.describe "GET v1/bookmarks", type: :request do
   end
 
   it "include only user related bookmarks" do
-    uid = SecureRandom.hex
-    kid = SecureRandom.hex
-    jwt_token = jwt_token_by(uid: uid, kid: kid)
+    jwt_token, uid = make_jwt_token
     krok = Factory[:krok]
     field = Factory[:field, krok_id: krok.id]
     year = Factory[:year]
@@ -147,21 +145,22 @@ RSpec.describe "GET v1/bookmarks", type: :request do
       question: question,
     ]
 
-    header "Authorization", "Bearer #{jwt_token}"
-    get "v1/bookmarks", params: { limit: 2, offset: 0 }
+    make_request(
+      :get,
+      "v1/bookmarks",
+      auth_code: jwt_token,
+      params: { limit: 2, offset: 0 },
+    )
 
     expect(last_response.status).to eq(200)
-    parsed = JSON.parse(last_response.body)
 
-    expect(parsed["hasNext"]).to eq(false)
-    expect(parsed["hasPrev"]).to eq(false)
-    expect(parsed["questions"]).to eq([])
+    expect(parsed_body["hasNext"]).to eq(false)
+    expect(parsed_body["hasPrev"]).to eq(false)
+    expect(parsed_body["questions"]).to eq([])
   end
 
   it "paginatable" do
-    uid = SecureRandom.hex
-    kid = SecureRandom.hex
-    jwt_token = jwt_token_by(uid: uid, kid: kid)
+    jwt_token, uid = make_jwt_token
     krok1 = Factory[:krok]
     field1 = Factory[:field, krok_id: krok1.id]
     year1 = Factory[:year]
@@ -229,30 +228,38 @@ RSpec.describe "GET v1/bookmarks", type: :request do
       question: question3,
     ]
 
-    header "Authorization", "Bearer #{jwt_token}"
-    get "v1/bookmarks", limit: 2, offset: 0
+    make_request(
+      :get,
+      "v1/bookmarks",
+      auth_code: jwt_token,
+      params: { limit: 2, offset: 0 },
+    )
 
     expect(last_response.status).to eq(200)
-    parsed = JSON.parse(last_response.body)
 
-    expect(parsed["hasNext"]).to eq(true)
-    expect(parsed["hasPrev"]).to eq(false)
+    expect(parsed_body["hasNext"]).to eq(true)
+    expect(parsed_body["hasPrev"]).to eq(false)
 
-    questions = parsed["questions"]
+    questions = parsed_body["questions"]
     expect(questions.count).to eq(2)
     expect(questions.map { |q| q["id"] })
       .to eq([question3.id, question2.id])
 
-    header "Authorization", "Bearer #{jwt_token}"
-    get "v1/bookmarks", limit: 2, offset: 2
+    make_request(
+      :get,
+      "v1/bookmarks",
+      auth_code: jwt_token,
+      params: { limit: 2, offset: 2 },
+    )
 
     expect(last_response.status).to eq(200)
-    parsed = JSON.parse(last_response.body)
 
-    expect(parsed["hasNext"]).to eq(false)
-    expect(parsed["hasPrev"]).to eq(true)
+    reload_parsed_body!
 
-    questions = parsed["questions"]
+    expect(parsed_body["hasNext"]).to eq(false)
+    expect(parsed_body["hasPrev"]).to eq(true)
+
+    questions = parsed_body["questions"]
     expect(questions.count).to eq(1)
     expect(questions.map { |q| q["id"] })
       .to eq([question1.id])
@@ -260,17 +267,16 @@ RSpec.describe "GET v1/bookmarks", type: :request do
 
   context "when user is not created yet" do
     it "returns returns error" do
-      uid = SecureRandom.hex
-      kid = SecureRandom.hex
-      jwt_token = jwt_token_by(uid: uid, kid: kid)
+      jwt_token, = make_jwt_token
 
-      header "Authorization", "Bearer #{jwt_token}"
-      get "v1/bookmarks"
+      make_request(
+        :get,
+        "v1/bookmarks",
+        auth_code: jwt_token,
+      )
 
       expect(last_response.status).to eq(422)
-      parsed = JSON.parse(last_response.body)
-
-      expect(parsed["errors"]).to eq(["user doesn't exist"])
+      expect(parsed_body.dig("errors", "user")).to eq(["is not exist"])
     end
   end
 end

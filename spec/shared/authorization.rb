@@ -23,13 +23,13 @@ RSpec.shared_context "authorization" do
     @certs_fixture ||= Oj.load(fixture_file("certs.json"))
   end
 
-  def jwt_token_by(uid: SecureRandom.hex, kid: SecureRandom.hex)
+  def make_jwt_token(uid: SecureRandom.hex, kid: SecureRandom.hex)
     allow(fetch_jwt_key_double)
       .to receive(:call)
       .with(kid)
       .and_return(certs_fixture["cert"])
 
-    prepare_jwt_token(
+    token = prepare_jwt_token(
       { "alg" => "RS256", "kid" => kid },
       {
         "exp" => Time.now.to_i + 1300,
@@ -41,5 +41,7 @@ RSpec.shared_context "authorization" do
       },
       OpenSSL::PKey::RSA.new(certs_fixture["key"]),
     )
+
+    [token, uid, kid]
   end
 end
