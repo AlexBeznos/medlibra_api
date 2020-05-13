@@ -6,6 +6,11 @@ require "pry-byebug"
 require "simplecov"
 SimpleCov.start
 
+if ENV["CI"]
+  require "simplecov-json"
+  SimpleCov.formatter = SimpleCov::Formatter::JSONFormatter
+end
+
 SPEC_ROOT = Pathname(__FILE__).dirname
 
 Dir[SPEC_ROOT.join("support/*.rb").to_s].each(&method(:require))

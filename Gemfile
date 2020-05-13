@@ -33,6 +33,8 @@ gem "jwt"
 gem "oj"
 
 group :development, :test do
+  gem "danger"
+  gem "danger-simplecov_json"
   gem "pry-byebug", platform: :mri
   gem "rubocop"
 end
@@ -47,5 +49,6 @@ group :test do
   gem "rom-factory", "~> 0.10"
   gem "rspec"
   gem "simplecov", require: false
+  gem "simplecov-json", require: false
   gem "webmock"
 end
