@@ -43,6 +43,7 @@ end
 
 group :test do
   gem "database_cleaner"
+  gem "codecov", :require => false
   gem "rack-test"
   gem "rom-factory", "~> 0.10"
   gem "rspec"

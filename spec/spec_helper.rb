@@ -6,6 +6,11 @@ require "pry-byebug"
 require "simplecov"
 SimpleCov.start
 
+if ENV["CI"]
+  require "codecov"
+  SimpleCov.formatter = SimpleCov::Formatter::Codecov
+end
+
 SPEC_ROOT = Pathname(__FILE__).dirname
 
 Dir[SPEC_ROOT.join("support/*.rb").to_s].each(&method(:require))
