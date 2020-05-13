@@ -42,6 +42,7 @@ group :development do
 end
 
 group :test do
+  gem "codecov", require: false
   gem "database_cleaner"
   gem "rack-test"
   gem "rom-factory", "~> 0.10"
