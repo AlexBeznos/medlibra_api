@@ -7,9 +7,7 @@ RSpec.describe "PUT v1/users", type: :request do
     context "when success" do
       context "when all attributes provided" do
         it "updates user" do
-          uid = SecureRandom.hex
-          kid = SecureRandom.hex
-          jwt_token = jwt_token_by(uid: uid, kid: kid)
+          jwt_token, uid = make_jwt_token
           user = Factory[:user, uid: uid]
           krok = Factory[:krok]
           field = Factory[:field, krok_id: krok.id]
@@ -30,7 +28,7 @@ RSpec.describe "PUT v1/users", type: :request do
             params: params,
           )
 
-          expect(last_response).to be_successful
+          expect(last_response.status).to eq(204)
           expect(last_response.body).to be_empty
           next_user = find_user(user.id)
 
@@ -46,9 +44,7 @@ RSpec.describe "PUT v1/users", type: :request do
 
       context "when only not relational attributes provided" do
         it "updates user" do
-          uid = SecureRandom.hex
-          kid = SecureRandom.hex
-          jwt_token = jwt_token_by(uid: uid, kid: kid)
+          jwt_token, uid = make_jwt_token
           user = Factory[:user, uid: uid]
           params = {
             helperNotificationsEnabled: true,
@@ -63,7 +59,7 @@ RSpec.describe "PUT v1/users", type: :request do
             params: params,
           )
 
-          expect(last_response.status).to eq(200)
+          expect(last_response.status).to eq(204)
           next_user = find_user(user.id)
 
           expect(next_user.created_at).to eq(user.created_at)
@@ -78,10 +74,8 @@ RSpec.describe "PUT v1/users", type: :request do
     context "when failure" do
       context "when only field provided" do
         it "return error that field not exist" do
-          uid = SecureRandom.hex
-          kid = SecureRandom.hex
-          jwt_token = jwt_token_by(uid: uid, kid: kid)
-          user = Factory[:user, uid: uid]
+          jwt_token, uid = make_jwt_token
+          user = Factory[:user, uid: uid, krok_id: nil, field_id: nil]
           field = Factory[:field]
           params = { fieldId: field.id }
 
@@ -104,10 +98,8 @@ RSpec.describe "PUT v1/users", type: :request do
 
       context "when field not suited to krok" do
         it "returns proper error" do
-          uid = SecureRandom.hex
-          kid = SecureRandom.hex
-          jwt_token = jwt_token_by(uid: uid, kid: kid)
-          user = Factory[:user, uid: uid]
+          jwt_token, uid = make_jwt_token
+          user = Factory[:user, uid: uid, krok_id: nil, field_id: nil]
           krok = Factory[:krok]
           field = Factory[:field]
           params = {

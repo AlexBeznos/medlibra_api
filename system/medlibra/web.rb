@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "dry/web/roda/application"
+require "roda_plugins"
 require_relative "container"
 
 module Medlibra
@@ -20,6 +21,7 @@ module Medlibra
     plugin :halt
     plugin :multi_route
     plugin :all_verbs
+    plugin :resolver
 
     route do |r|
       r.on "v1" do

@@ -12,28 +12,19 @@ module Medlibra
         include Dry::Monads::Do.for(:call)
         include Import[
           "repositories.users_repo",
+          "services.find_user",
           validation: "validations.users.for_update",
         ]
 
         def call(params:, uid:)
-          user = yield find_user(uid)
+          user = yield find_user.(uid)
           values = yield validate(params.merge(user: user))
           yield update_user(user, values)
 
-          Success()
+          Success(204)
         end
 
         private
-
-        def find_user(uid)
-          user = users_repo.by_uid(uid)
-
-          if user
-            Success(user)
-          else
-            Failure(uid: "user not created")
-          end
-        end
 
         def validate(params)
           result = validation.(params)

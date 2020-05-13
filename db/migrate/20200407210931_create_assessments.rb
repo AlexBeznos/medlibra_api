@@ -6,6 +6,7 @@ ROM::SQL.migration do
       primary_key :id
 
       String :type, null: false
+      Integer :questions_amount, null: false
 
       foreign_key :krok_id, table: :kroks
       foreign_key :field_id, table: :fields

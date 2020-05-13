@@ -8,6 +8,7 @@ module Persistence
       schema(:assessments, infer: true) do
         attribute :id, ::Types::Strict::Integer
         attribute :type, ::Types::AssessmentTypes
+        attribute :questions_amount, ::Types::Strict::Integer
 
         primary_key :id
 
@@ -17,6 +18,12 @@ module Persistence
           belongs_to :subfield
           belongs_to :year
         end
+      end
+
+      def exams_page(krok_id:, field_id:)
+        where(type: ::Types::AssessmentTypes["exam"])
+          .where(krok_id: krok_id)
+          .where(field_id: field_id)
       end
     end
   end

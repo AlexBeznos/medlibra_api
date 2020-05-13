@@ -129,7 +129,10 @@ class Filler
     assessment ||= assessments_repo
                    .assessments
                    .command(:create)
-                   .call(assessment_params)
+                   .call(
+                     assessment_params
+                       .merge(questions_amount: questions.count),
+                   )
 
     questions.each do |question|
       qrecord = create_question(question)
@@ -226,6 +229,13 @@ class Filler
 end
 
 Dir["./db/seed_data/testkrok/*"].each do |file_path|
+  file = File.read(file_path)
+  data = Medlibra::Container["utils.oj"].load(file)
+
+  Filler.new.(data)
+end
+
+Dir["./db/seed_data/testukr/*"].each do |file_path|
   file = File.read(file_path)
   data = Medlibra::Container["utils.oj"].load(file)
 
