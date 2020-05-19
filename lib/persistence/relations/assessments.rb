@@ -17,6 +17,9 @@ module Persistence
           belongs_to :field
           belongs_to :subfield
           belongs_to :year
+
+          has_many :assessment_questions
+          has_many :questions, through: :assessment_questions
         end
       end
 

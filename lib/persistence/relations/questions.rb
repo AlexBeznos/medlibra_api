@@ -36,6 +36,15 @@ module Persistence
           .combine(:bookmarks)
           .node(:bookmarks) { |b| b.where(user_id: user_id) }
       end
+
+      def for_finish_validation(assessment_id)
+        join(assessment_questions)
+          .where(assessment_questions[:assessment_id] => assessment_id)
+          .combine(:answers)
+          .node(:answers) do |answers|
+            answers.select(:id, :question_id, :correct)
+          end.select(:id)
+      end
     end
   end
 end
