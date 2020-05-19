@@ -28,6 +28,7 @@ module Medlibra
           assessments_repo.exams_page(
             krok_id: user.krok_id,
             field_id: user.field_id,
+            user_id: user.id,
           )
         end
 
@@ -37,8 +38,8 @@ module Medlibra
               id: exam.id,
               year: exam.year.name,
               amount: exam.questions_amount,
-              triesAmount: 0,
-              score: 0,
+              triesAmount: exam.attempts.count,
+              score: exam.attempts.first&.score,
             }
           end
         end

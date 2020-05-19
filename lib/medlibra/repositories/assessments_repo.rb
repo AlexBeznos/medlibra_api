@@ -6,10 +6,17 @@ require "medlibra/repository"
 module Medlibra
   module Repositories
     class AssessmentsRepo < Medlibra::Repository[:assessments]
-      def exams_page(krok_id:, field_id:)
+      def exams_page(user_id:, **page_params)
         assessments
-          .exams_page(krok_id: krok_id, field_id: field_id)
-          .combine(:year)
+          .exams_page(**page_params)
+          .with_attempts_by_user(user_id: user_id)
+          .to_a
+      end
+
+      def subfields_page(user_id:, **page_params)
+        assessments
+          .subfields_page(**page_params)
+          .with_attempts_by_user(user_id: user_id)
           .to_a
       end
     end

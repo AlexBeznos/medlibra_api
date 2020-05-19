@@ -8,7 +8,7 @@ RSpec.describe "v1/subjects/:id/all", type: :request do
       jwt_token, uid = make_jwt_token
       krok = Factory[:krok]
       field = Factory[:field]
-      Factory[
+      user = Factory[
         :user,
         uid: uid,
         krok: krok,
@@ -23,6 +23,20 @@ RSpec.describe "v1/subjects/:id/all", type: :request do
         field: field,
         year: year,
         subfield: subfield,
+      ]
+      2.times do
+        Factory[
+          :attempt,
+          assessment_id: training.id,
+          user_id: user.id,
+          score: 1.0,
+        ]
+      end
+      Factory[
+        :attempt,
+        assessment_id: training.id,
+        user_id: user.id,
+        score: 0.2,
       ]
       exam = Factory[
         :assessment,
@@ -53,8 +67,8 @@ RSpec.describe "v1/subjects/:id/all", type: :request do
       expect(parsed_body[0]["exam"]).to eq(expected_exam)
       expect(parsed_body[0]["training"]).to eq(expected_training)
       expect(parsed_body[0]["year"]).to eq(year.name)
-      expect(parsed_body[0]["triesAmount"]).to eq(0)
-      expect(parsed_body[0]["score"]).to eq(0)
+      expect(parsed_body[0]["triesAmount"]).to eq(3)
+      expect(parsed_body[0]["score"]).to eq(0.2)
     end
 
     context "when subfield is not exist" do
