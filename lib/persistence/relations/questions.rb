@@ -8,7 +8,6 @@ module Persistence
       schema(:questions, infer: true) do
         attribute :id, ::Types::Strict::Integer
         attribute :title, ::Types::Strict::String
-        attribute :subfield_id, ::Types::Strict::Integer
 
         primary_key :id
 

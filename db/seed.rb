@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "oj"
+require_relative "../system/boot"
 require_relative "../system/medlibra/import"
 
 class Filler
@@ -86,6 +87,7 @@ class Filler
 
   def call(data)
     return if data["subField"].first.to_s.match(/USMLE/)
+    return if data["questions"].empty?
 
     krok = find_or_create_krok(data["krokType"])
     field = find_or_create_field(data["field"], krok)
@@ -135,7 +137,7 @@ class Filler
                    )
 
     questions.each do |question|
-      qrecord = create_question(question)
+      qrecord = create_question(question, subfield)
 
       assessment_questions_repo
         .assessment_questions
@@ -144,11 +146,13 @@ class Filler
     end
   end
 
-  def create_question(question)
+  def create_question(question, subfield)
+    qparams = { title: question["title"].to_s }
+    qparams[:subfield_id] = subfield.id if subfield
     qrecord = questions_repo
               .questions
               .command(:create)
-              .call(title: question["title"].to_s)
+              .call(**qparams)
 
     question["answers"].each do |answer|
       answers_repo
@@ -228,6 +232,114 @@ class Filler
   end
 end
 
+class SubfieldsFiller
+  include Medlibra::Import[
+    "repositories.questions_repo",
+  ]
+
+  def call
+    questions_repo.questions.where(subfield_id: nil).to_a.each do |question|
+      q =
+        questions_repo
+        .questions
+        .where { subfield_id.not(nil) }
+        .where(title: question.title)
+        .limit(1)
+        .one
+      next unless q
+
+      questions_repo
+        .questions
+        .by_pk(question.id)
+        .changeset(:update, subfield_id: q.subfield_id)
+        .commit
+    end
+  end
+end
+
+class TrainingExamFiller
+  include Medlibra::Import[
+    "repositories.assessments_repo",
+    "repositories.questions_repo",
+    "repositories.answers_repo",
+    "repositories.assessment_questions_repo",
+  ]
+
+  def call
+    assessments_repo
+      .assessments
+      .where(type: "training")
+      .combine(questions: :answers)
+      .each(&method(:prepare_exam))
+  end
+
+  private
+
+  def prepare_exam(assessment)
+    exam_questions = []
+
+    assessment.questions.each do |question|
+      exam_questions.push(question) if exist_in_exam?(assessment, question)
+    end
+
+    persist_questions(assessment, exam_questions) if exam_questions.any?
+  end
+
+  def exist_in_exam?(assessment, question)
+    relation = assessments_repo.assessments
+
+    relation
+      .join(relation.questions)
+      .where(type: "exam")
+      .where(krok_id: assessment.krok_id)
+      .where(field_id: assessment.krok_id)
+      .where(year_id: assessment.year_id)
+      .where(relation.questions[:title] => question.title)
+      .exist?
+  end
+
+  def persist_questions(assessment, questions)
+    a = create_assessment(assessment, questions.count)
+    questions.each do |question|
+      create_question(a, question)
+    end
+  end
+
+  def create_assessment(assessment, questions_amount)
+    assessments_repo
+      .assessments
+      .changeset(
+        :create,
+        type: "training-exam",
+        krok_id: assessment.krok_id,
+        field_id: assessment.field_id,
+        subfield_id: assessment.subfield_id,
+        year_id: assessment.year_id,
+        questions_amount: questions_amount,
+      ).commit
+  end
+
+  def create_question(assessment, question)
+    q =
+      questions_repo
+      .questions
+      .changeset(:create, title: question.title, subfield_id: assessment.subfield_id)
+      .commit
+
+    question.answers.each do |answer|
+      answers_repo
+        .answers
+        .changeset(:create, title: answer.title, correct: answer.correct, question_id: q.id)
+        .commit
+    end
+
+    assessment_questions_repo
+      .assessment_questions
+      .changeset(:create, question_id: q.id, assessment_id: assessment.id)
+      .commit
+  end
+end
+
 Dir["./db/seed_data/testkrok/*"].each do |file_path|
   file = File.read(file_path)
   data = Medlibra::Container["utils.oj"].load(file)
@@ -241,3 +353,6 @@ Dir["./db/seed_data/testukr/*"].each do |file_path|
 
   Filler.new.(data)
 end
+
+SubfieldsFiller.new.call
+TrainingExamFiller.new.call
