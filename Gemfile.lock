@@ -241,6 +241,7 @@ DEPENDENCIES
   rom-sql (~> 3.1)
   rspec
   rubocop
+  ruby-progressbar
   sequel_postgresql_triggers
   simplecov
   webmock

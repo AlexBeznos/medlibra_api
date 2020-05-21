@@ -16,3 +16,7 @@ tmp/*
 # Ignore coverage
 coverage/*
 *.DS_Store
+
+# Backups
+backup.sql
+backup-full.sql
