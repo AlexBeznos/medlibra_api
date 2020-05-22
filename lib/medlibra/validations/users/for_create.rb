@@ -20,9 +20,7 @@ module Medlibra
         end
 
         rule(:uid) do
-          if users_repo.users.exist?(uid: values[:uid])
-            key.failure("already exists")
-          end
+          key.failure("already exists") if users_repo.users.exist?(uid: values[:uid])
         end
       end
     end

@@ -113,7 +113,7 @@ namespace :db do
     load(seed_data) if File.exist?(seed_data)
   end
 
-  desc "Load a small, representative set of data so that the application can start in a useful state (for development)." # rubocop:disable Layout/LineLength
+  desc "Load a small, representative set of data so that the application can start in a useful state (for development)."
   task :sample_data do
     sample_data = File.join("db", "sample_data.rb")
     load(sample_data) if File.exist?(sample_data)

@@ -39,9 +39,7 @@ module Medlibra
         end
 
         rule(:exp) do
-          unless Time.now < Time.at(values[:exp])
-            key.failure("must be in future")
-          end
+          key.failure("must be in future") unless Time.now < Time.at(values[:exp])
         end
 
         rule(:iat) do
@@ -49,9 +47,7 @@ module Medlibra
         end
 
         rule(:auth_time) do
-          unless Time.now > Time.at(values[:auth_time])
-            key.failure("must be in past")
-          end
+          key.failure("must be in past") unless Time.now > Time.at(values[:auth_time])
         end
       end
     end
