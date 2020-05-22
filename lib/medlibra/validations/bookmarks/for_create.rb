@@ -19,9 +19,7 @@ module Medlibra
         end
 
         rule(:question_id) do
-          unless questions_repo.questions.exist?(id: values[:question_id])
-            key.failure("is not exist")
-          end
+          key.failure("is not exist") unless questions_repo.questions.exist?(id: values[:question_id])
         end
       end
     end

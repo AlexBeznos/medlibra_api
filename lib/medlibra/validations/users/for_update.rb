@@ -36,9 +36,7 @@ module Medlibra
         rule(:field_id) do
           if key?
             if values[:krok_id]
-              unless field_exist?(values[:krok_id], values[:field_id])
-                key.failure("not exist")
-              end
+              key.failure("not exist") unless field_exist?(values[:krok_id], values[:field_id])
             else
               key.failure("krok_id is required") unless values[:krok_id]
             end

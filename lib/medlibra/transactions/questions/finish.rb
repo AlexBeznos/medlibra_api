@@ -55,10 +55,8 @@ module Medlibra
           end
         end
 
-        def validate_params(params) # rubocop:disable Metrics/MethodLength
-          unless params.is_a?(Array)
-            return Failure(questions: ["should be an array"])
-          end
+        def validate_params(params)
+          return Failure(questions: ["should be an array"]) unless params.is_a?(Array)
 
           validate_call = validate.method(:call)
           results = params.map(&validate_call)

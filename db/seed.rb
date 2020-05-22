@@ -144,9 +144,7 @@ module Fillers
         subfield_id: subfield&.id,
       }
 
-      if type == "training"
-        assessment = assessments_repo.assessments.where(assessment_params).one
-      end
+      assessment = assessments_repo.assessments.where(assessment_params).one if type == "training"
 
       assessment ||= assessments_repo
                      .assessments
