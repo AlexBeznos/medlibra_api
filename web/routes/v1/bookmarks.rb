@@ -11,10 +11,11 @@ module Medlibra
             uid: r.env["firebase.uid"],
           )
         end
+
         r.post do
           r.resolve_with_handling(
             "transactions.bookmarks.create",
-            params: r.params,
+            params: r.POST,
             uid: r.env["firebase.uid"],
           )
         end

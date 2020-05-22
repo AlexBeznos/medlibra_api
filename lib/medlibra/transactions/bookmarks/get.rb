@@ -50,7 +50,7 @@ module Medlibra
             .where(user_id: user.id)
 
           pagination_meta
-            .call(query, params)
+            .call(query, **params)
         end
 
         def get_questions(user, limit:, offset:)

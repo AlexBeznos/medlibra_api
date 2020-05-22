@@ -13,7 +13,7 @@ RSpec.describe "v1/exams", type: :request do
       field2 = Factory[:field, krok_id: krok2.id]
       years = Array.new(3) { Factory[:year] }
       year4 = Factory[:year]
-      Factory[
+      user = Factory[
         :user,
         uid: uid,
         krok_id: krok1.id,
@@ -33,6 +33,15 @@ RSpec.describe "v1/exams", type: :request do
       expected_ids = expected_assessments.map(&:id)
       expected_years = years.map(&:name)
       expected_amounts = expected_assessments.map(&:questions_amount)
+      expected_tries_amount = [1, 3, 2]
+      expected_scores = [0.7, 0.8, 0.1]
+      prepare_attempts_for(
+        tries: expected_tries_amount,
+        scores: expected_scores,
+        assessments: expected_assessments,
+        user: user,
+      )
+
       Factory[
         :assessment,
         :exam,
@@ -51,8 +60,8 @@ RSpec.describe "v1/exams", type: :request do
       expect(parsed_body.map { |d| d["id"] }).to eq(expected_ids)
       expect(parsed_body.map { |d| d["year"] }).to eq(expected_years)
       expect(parsed_body.map { |d| d["amount"] }).to eq(expected_amounts)
-      expect(parsed_body.map { |d| d["triesAmount"] }).to eq([0, 0, 0])
-      expect(parsed_body.map { |d| d["score"] }).to eq([0, 0, 0])
+      expect(parsed_body.map { |d| d["triesAmount"] }).to eq(expected_tries_amount)
+      expect(parsed_body.map { |d| d["score"] }).to eq(expected_scores)
     end
 
     context "when user is not yet registered" do
@@ -90,6 +99,21 @@ RSpec.describe "v1/exams", type: :request do
 
         expect(last_response.status).to eq(422)
         expect(parsed_body.dig("errors", "user")).to eq(["is not exist"])
+      end
+    end
+  end
+
+  def prepare_attempts_for(scores:, tries:, assessments:, user:)
+    assessments.each.with_index do |assessment, ai|
+      tries[ai].times do |i|
+        score = tries[ai] == (i + 1) ? scores[ai] : 1.0
+
+        Factory[
+          :attempt,
+          user_id: user.id,
+          assessment_id: assessment.id,
+          score: score,
+        ]
       end
     end
   end

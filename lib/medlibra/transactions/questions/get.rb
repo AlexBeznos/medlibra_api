@@ -27,7 +27,7 @@ module Medlibra
           yield validate_assessment(id)
           params = yield validate_params(params)
           meta = get_pagination_meta(id, params)
-          questions = get_questions(user, id, params)
+          questions = get_questions(user, id, **params)
 
           Success(meta.merge(serialize_questions(questions)))
         end
@@ -66,7 +66,7 @@ module Medlibra
             .by_assessment(id)
 
           pagination_meta
-            .call(query, params)
+            .call(query, **params)
         end
 
         def get_questions(user, id, limit:, offset:)

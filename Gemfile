@@ -39,6 +39,7 @@ end
 
 group :development do
   gem "rerun"
+  gem "ruby-progressbar"
 end
 
 group :test do

@@ -17,6 +17,10 @@ module Persistence
           belongs_to :field
           belongs_to :subfield
           belongs_to :year
+
+          has_many :assessment_questions
+          has_many :questions, through: :assessment_questions
+          has_many :attempts
         end
       end
 
@@ -24,6 +28,28 @@ module Persistence
         where(type: ::Types::AssessmentTypes["exam"])
           .where(krok_id: krok_id)
           .where(field_id: field_id)
+      end
+
+      def subfields_page(krok_id:, field_id:, subfield_id:)
+        types = [
+          ::Types::AssessmentTypes["training"],
+          ::Types::AssessmentTypes["training-exam"],
+        ]
+
+        where(type: types)
+          .where(krok_id: krok_id)
+          .where(field_id: field_id)
+          .where(subfield_id: subfield_id)
+      end
+
+      def with_attempts_by_user(user_id:)
+        combine(:year, :attempts)
+          .node(:attempts) do |attempts|
+            attempts
+              .where(user_id: user_id)
+              .select(:score, :assessment_id)
+              .order { created_at.desc }
+          end
       end
     end
   end
