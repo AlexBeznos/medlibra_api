@@ -43,22 +43,20 @@ module Medlibra
 
         def find_year_assessmets(user, subfield_id)
           assessments_repo
-            .assessments
-            .where(krok_id: user.krok_id)
-            .where(field_id: user.field_id)
-            .where(subfield_id: subfield_id)
-            .combine(:year)
-            .to_a
-            .group_by(&:year)
+            .subfields_page(
+              krok_id: user.krok_id,
+              field_id: user.field_id,
+              subfield_id: subfield_id,
+              user_id: user.id,
+            ).group_by(&:year)
         end
 
         def serialize_year_assessments(years)
           years.map do |year, assessments|
             {
               year: year.name,
-              triesAmount: 0,
-              score: 0,
             }
+              .merge(attempt_attributes(assessments))
               .merge(find_exam(assessments))
               .merge(find_training(assessments))
           end
@@ -92,6 +90,17 @@ module Medlibra
               id: record.id,
               amount: record.questions_amount,
             },
+          }
+        end
+
+        def attempt_attributes(assessments)
+          record = assessments.detect do |r|
+            r.type == ::Types::AssessmentTypes["training"]
+          end
+
+          {
+            triesAmount: record.attempts.count,
+            score: record.attempts.first&.score,
           }
         end
       end

@@ -121,7 +121,7 @@ GEM
       byebug (~> 11.0)
       pry (~> 0.13.0)
     public_suffix (4.0.3)
-    puma (4.3.3)
+    puma (4.3.5)
       nio4r (~> 2.0)
     rack (2.2.2)
     rack-test (1.1.0)
@@ -136,7 +136,7 @@ GEM
     rerun (0.13.0)
       listen (~> 3.0)
     rexml (3.2.4)
-    roda (3.28.0)
+    roda (3.32.0)
       rack
     roda-flow (0.4.0)
     rom (5.2.4)
@@ -244,6 +244,7 @@ DEPENDENCIES
   rom-sql (~> 3.1)
   rspec
   rubocop
+  ruby-progressbar
   sequel_postgresql_triggers
   simplecov
   webmock

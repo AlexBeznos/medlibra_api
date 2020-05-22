@@ -2,7 +2,7 @@
 
 require "web_spec_helper"
 
-RSpec.describe "v1/questions/:id", type: :request do
+RSpec.describe "v1/questions/:assessment_id", type: :request do
   describe "#GET" do
     it "returns questions" do
       jwt_token, uid = make_jwt_token

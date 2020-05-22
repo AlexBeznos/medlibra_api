@@ -7,11 +7,9 @@ class Roda
   module RodaPlugins
     module Resolver
       module RequestMethods
-        def resolve_with_handling(*args)
-          transaction = args.shift
-
+        def resolve_with_handling(transaction, **params)
           resolve(transaction) do |tr|
-            result = tr.(*args)
+            result = tr.(**params)
 
             if result.success?
               success(result)
