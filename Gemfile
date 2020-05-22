@@ -31,6 +31,7 @@ gem "dry-types"
 gem "dry-validation"
 gem "jwt"
 gem "oj"
+gem "sentry-raven"
 
 group :development, :test do
   gem "pry-byebug", platform: :mri

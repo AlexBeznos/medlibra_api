@@ -30,8 +30,15 @@ module Medlibra
     end
 
     error do |e|
-      self.class[:rack_monitor].instrument(:error, exception: e)
-      raise e
+      self.class[:rack_monitor].instrument(
+        :error,
+        exception: e,
+        uid: env["firebase.uid"],
+      )
+
+      raise e if ENV["RACK_ENV"] != "production"
+
+      { errors: ["something went wrong..."] }
     end
 
     load_routes!

@@ -97,6 +97,8 @@ GEM
       thor (~> 0.19)
     faker (2.11.0)
       i18n (>= 1.6, < 2)
+    faraday (1.0.1)
+      multipart-post (>= 1.2, < 3)
     ffi (1.12.1)
     hashdiff (1.0.1)
     i18n (1.8.2)
@@ -108,6 +110,7 @@ GEM
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     method_source (1.0.0)
+    multipart-post (2.1.1)
     nio4r (2.5.2)
     oj (3.10.6)
     parallel (1.19.1)
@@ -197,6 +200,8 @@ GEM
       parser (>= 2.7.0.1)
     ruby-progressbar (1.10.1)
     safe_yaml (1.0.5)
+    sentry-raven (3.0.0)
+      faraday (>= 1.0)
     sequel (5.28.0)
     sequel_postgresql_triggers (1.5.0)
       sequel
@@ -245,6 +250,7 @@ DEPENDENCIES
   rspec
   rubocop
   ruby-progressbar
+  sentry-raven
   sequel_postgresql_triggers
   simplecov
   webmock
