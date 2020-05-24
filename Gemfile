@@ -32,6 +32,10 @@ gem "dry-validation"
 gem "jwt"
 gem "oj"
 
+# Monitoring
+gem "newrelic_rpm"
+gem "sentry-raven"
+
 group :development, :test do
   gem "pry-byebug", platform: :mri
   gem "rubocop"

@@ -22,8 +22,13 @@ module Fillers
   end
 
   class Creator
+    KROKS_MAPPER = {
+      "крок m" => "Крок М",
+    }.freeze
+
     FIELDS_MAPPER = {
       "загальна лікарська підготовка" => "Лікувальна справа",
+      "акушерство" => "Акушерська справа",
     }.freeze
 
     SUBFIELDS_MAPPER = {
@@ -107,8 +112,13 @@ module Fillers
       return if data["subField"].first.to_s.match(/USMLE/)
       return if data["questions"].empty?
 
-      krok = find_or_create_krok(data["krokType"])
-      field = find_or_create_field(data["field"], krok)
+      krok = find_or_create_krok(
+        find_name(
+          data["krokType"],
+          KROKS_MAPPER,
+        ),
+      )
+      field = find_or_create_field(find_name(data["field"], FIELDS_MAPPER), krok)
       year = find_or_create_year(data["year"])
       subfield_name = data["subField"].first
 
