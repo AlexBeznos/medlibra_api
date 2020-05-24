@@ -1,19 +1,27 @@
 # frozen_string_literal: true
 
-Medlibra::Container.boot :monitor do |system|
+Medlibra::Container.boot :monitor, namespace: true do |system|
   init do
     require "dry/monitor/sql/logger"
+    require "sentry-raven"
+    require "newrelic_rpm"
   end
 
   start do
+    use :settings
+
     notifications.register_event(:sql)
     Dry::Monitor::SQL::Logger.new(logger).subscribe(notifications)
 
-    use :utils
+    Raven.configure do |config|
+      config.dsn = system[:settings].sentry_dsn
+    end
+
+    register "sentry", Raven
 
     system["rack_monitor"].on(:error) do |params|
-      system["utils.sentry"].user_context(uid: params[:uid])
-      system["utils.sentry"].capture_exception(params[:exception])
+      Raven.user_context(uid: params[:uid])
+      Raven.capture_exception(params[:exception])
     end
   end
 end
