@@ -10,8 +10,6 @@ Medlibra::Container.boot :utils, namespace: true do |_|
   end
 
   start do
-    use :settings
-
     register "curl", Curl
     register "jwt", JWT
     register "oj", Oj
