@@ -48,7 +48,7 @@ module Medlibra
       end
 
       def cache_control_matcher(str)
-        str.match(/C|cache\-control\:/)
+        str.match(/(C|c)ache-(C|c)ontrol\:/)
       end
 
       def clear_and_fetch_keys
