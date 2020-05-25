@@ -6,11 +6,16 @@
   },
   "servers": [
     {
-      "url": "https://api.medlibra.app"
+      "url": "https://api.medlibra.app",
+      "description": "prod"
+    },
+    {
+      "url": "https://stage.medlibra.app",
+      "description": "stage"
     }
   ],
   "paths": {
-    "/users": {
+    "/v1/users": {
       "put": {
         "summary": "Should be hit after user chose krok and fiend",
         "tags": [],
@@ -76,9 +81,10 @@
             }
           }
         }
-      }
+      },
+      "parameters": []
     },
-    "/dictionary": {
+    "/v1/dictionary": {
       "get": {
         "summary": "Map of krok types to fields",
         "tags": [],
@@ -122,9 +128,10 @@
         },
         "operationId": "dictionary",
         "parameters": []
-      }
+      },
+      "parameters": []
     },
-    "/exams": {
+    "/v1/exams": {
       "get": {
         "summary": "Your GET endpoint",
         "tags": [],
@@ -161,9 +168,10 @@
           }
         },
         "operationId": "exams"
-      }
+      },
+      "parameters": []
     },
-    "/subjects": {
+    "/v1/subjects": {
       "get": {
         "summary": "Your GET endpoint",
         "tags": [],
@@ -191,9 +199,10 @@
           }
         },
         "operationId": "subjects"
-      }
+      },
+      "parameters": []
     },
-    "/subjects/{id}/all": {
+    "/v1/subjects/{id}/all": {
       "parameters": [
         {
           "schema": {
@@ -259,7 +268,7 @@
         "description": ""
       }
     },
-    "/questions/{assignmentId}": {
+    "/v1/questions/{assignmentId}": {
       "parameters": [
         {
           "schema": {
@@ -360,7 +369,7 @@
         ]
       }
     },
-    "/questions/{assignmentId}/finish": {
+    "/v1/questions/{assignmentId}/finish": {
       "parameters": [
         {
           "schema": {
@@ -401,7 +410,7 @@
         }
       }
     },
-    "/bookmarks": {
+    "/v1/bookmarks": {
       "get": {
         "summary": "Your GET endpoint",
         "tags": [],
@@ -496,7 +505,8 @@
             }
           }
         }
-      }
+      },
+      "parameters": []
     }
   },
   "components": {
