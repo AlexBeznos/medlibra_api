@@ -10,6 +10,8 @@ Medlibra::Container.boot :monitor, namespace: true do |system|
   start do
     use :settings
 
+    logger.info!
+
     notifications.register_event(:sql)
     Dry::Monitor::SQL::Logger.new(logger).subscribe(notifications)
 

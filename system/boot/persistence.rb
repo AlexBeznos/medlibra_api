@@ -16,7 +16,7 @@ Medlibra::Container.boot :persistence, namespace: true do |system|
     rom_config = ROM::Configuration.new(
       :sql,
       system[:settings].database_url,
-      extensions: %i[error_sql pg_array pg_json],
+      extensions: %i[error_sql pg_array pg_json newrelic_instrumentation],
     )
 
     rom_config.plugin :sql, relations: :instrumentation do |plugin_config|
