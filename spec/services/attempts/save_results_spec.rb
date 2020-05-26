@@ -2,9 +2,9 @@
 
 require "db_spec_helper"
 
-require "medlibra/services/questions/save_results"
+require "medlibra/services/attempts/save_results"
 
-RSpec.describe Medlibra::Services::Questions::SaveResults do
+RSpec.describe Medlibra::Services::Attempts::SaveResults do
   describe "#call" do
     context "when success" do
       it "returns success monad" do

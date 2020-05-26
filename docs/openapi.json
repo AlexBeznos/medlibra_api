@@ -268,13 +268,13 @@
         "description": ""
       }
     },
-    "/v1/questions/{assignmentId}": {
+    "/v1/assessments/{assessmentId}/questions": {
       "parameters": [
         {
           "schema": {
             "type": "string"
           },
-          "name": "assignmentId",
+          "name": "assessmentId",
           "in": "path",
           "required": true
         }
@@ -369,13 +369,13 @@
         ]
       }
     },
-    "/v1/questions/{assignmentId}/finish": {
+    "/v1/assessments/{assessmentId}/finish": {
       "parameters": [
         {
           "schema": {
             "type": "string"
           },
-          "name": "assignmentId",
+          "name": "assessmentId",
           "in": "path",
           "required": true
         }

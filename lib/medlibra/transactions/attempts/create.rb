@@ -6,8 +6,8 @@ require "medlibra/import"
 
 module Medlibra
   module Transactions
-    module Questions
-      class Finish
+    module Attempts
+      class Create
         class IncorrectRelationError < StandardError
         end
 
@@ -17,8 +17,8 @@ module Medlibra
           "repositories.assessments_repo",
           "repositories.questions_repo",
           "services.find_user",
-          "services.questions.save_results",
-          validate: "validations.questions.for_finish",
+          "services.attempts.save_results",
+          validate: "validations.attempts.for_create",
         ]
 
         def call(uid:, id:, params:) # rubocop:disable Metrics/MethodLength
