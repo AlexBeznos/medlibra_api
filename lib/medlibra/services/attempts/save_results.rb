@@ -5,7 +5,7 @@ require "medlibra/import"
 
 module Medlibra
   module Services
-    module Questions
+    module Attempts
       class SaveResults
         include Dry::Monads[:result]
 

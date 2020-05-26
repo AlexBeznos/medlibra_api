@@ -2,7 +2,7 @@
 
 require "web_spec_helper"
 
-RSpec.describe "v1/questions/:assessment_id/finish", type: :request do
+RSpec.describe "v1/assessments/:assessment_id/finish", type: :request do
   describe "#GET" do
     context "when all answers correct" do
       it "creates attempt with score 1" do
@@ -18,7 +18,7 @@ RSpec.describe "v1/questions/:assessment_id/finish", type: :request do
 
         make_request(
           :post,
-          "v1/questions/#{data[:assessment].id}/finish",
+          "v1/assessments/#{data[:assessment].id}/finish",
           auth_code: jwt_token,
           params: body,
         )
@@ -57,7 +57,7 @@ RSpec.describe "v1/questions/:assessment_id/finish", type: :request do
 
         make_request(
           :post,
-          "v1/questions/#{data[:assessment].id}/finish",
+          "v1/assessments/#{data[:assessment].id}/finish",
           auth_code: jwt_token,
           params: body,
         )
@@ -87,7 +87,7 @@ RSpec.describe "v1/questions/:assessment_id/finish", type: :request do
 
         make_request(
           :post,
-          "v1/questions/1/finish",
+          "v1/assessments/1/finish",
           auth_code: jwt_token,
         )
 
@@ -104,7 +104,7 @@ RSpec.describe "v1/questions/:assessment_id/finish", type: :request do
 
         make_request(
           :post,
-          "v1/questions/#{assessment.id}/finish",
+          "v1/assessments/#{assessment.id}/finish",
           auth_code: jwt_token,
           params: { questionId: 1, choosenAnswerId: 1 },
         )
@@ -122,7 +122,7 @@ RSpec.describe "v1/questions/:assessment_id/finish", type: :request do
 
         make_request(
           :post,
-          "v1/questions/#{assessment.id}/finish",
+          "v1/assessments/#{assessment.id}/finish",
           auth_code: jwt_token,
           params: [{ questionId: 1, choosenAnswerId: "hello" }],
         )
@@ -152,7 +152,7 @@ RSpec.describe "v1/questions/:assessment_id/finish", type: :request do
 
           make_request(
             :post,
-            "v1/questions/#{data[:assessment].id}/finish",
+            "v1/assessments/#{data[:assessment].id}/finish",
             auth_code: jwt_token,
             params: body,
           )
@@ -171,7 +171,7 @@ RSpec.describe "v1/questions/:assessment_id/finish", type: :request do
 
         make_request(
           :post,
-          "v1/questions/#{assessment.id}/finish",
+          "v1/assessments/#{assessment.id}/finish",
           auth_code: jwt_token,
         )
 

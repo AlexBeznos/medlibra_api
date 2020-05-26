@@ -2,9 +2,9 @@
 
 module Medlibra
   class Web
-    route "questions" do |r|
+    route "assessments" do |r|
       r.on Integer do |assessment_id|
-        r.get do
+        r.get "questions" do
           r.resolve_with_handling(
             "transactions.questions.get",
             uid: env["firebase.uid"],
@@ -15,7 +15,7 @@ module Medlibra
 
         r.post "finish" do
           r.resolve_with_handling(
-            "transactions.questions.finish",
+            "transactions.attempts.create",
             uid: env["firebase.uid"],
             id: assessment_id,
             params: r.POST,

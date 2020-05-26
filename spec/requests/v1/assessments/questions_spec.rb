@@ -2,7 +2,7 @@
 
 require "web_spec_helper"
 
-RSpec.describe "v1/questions/:assessment_id", type: :request do
+RSpec.describe "v1/assessments/:assessment_id/questions", type: :request do
   describe "#GET" do
     it "returns questions" do
       jwt_token, uid = make_jwt_token
@@ -37,7 +37,7 @@ RSpec.describe "v1/questions/:assessment_id", type: :request do
 
       make_request(
         :get,
-        "v1/questions/#{assessment.id}",
+        "v1/assessments/#{assessment.id}/questions",
         auth_code: jwt_token,
       )
 
@@ -94,7 +94,7 @@ RSpec.describe "v1/questions/:assessment_id", type: :request do
 
       make_request(
         :get,
-        "v1/questions/#{assessment.id}",
+        "v1/assessments/#{assessment.id}/questions",
         auth_code: jwt_token,
         params: { limit: 2, offset: 0 },
       )
@@ -114,7 +114,7 @@ RSpec.describe "v1/questions/:assessment_id", type: :request do
 
       make_request(
         :get,
-        "v1/questions/#{assessment.id}",
+        "v1/assessments/#{assessment.id}/questions",
         auth_code: jwt_token,
         params: { limit: 2, offset: 2 },
       )
@@ -139,7 +139,7 @@ RSpec.describe "v1/questions/:assessment_id", type: :request do
 
         make_request(
           :get,
-          "v1/questions/1",
+          "v1/assessments/1/questions",
           auth_code: jwt_token,
         )
 
@@ -155,7 +155,7 @@ RSpec.describe "v1/questions/:assessment_id", type: :request do
 
         make_request(
           :get,
-          "v1/questions/#{assessment.id}",
+          "v1/assessments/#{assessment.id}/questions",
           auth_code: jwt_token,
         )
 
