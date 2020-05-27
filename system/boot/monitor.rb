@@ -10,7 +10,7 @@ Medlibra::Container.boot :monitor, namespace: true do |system|
   start do
     use :settings
 
-    if system.config.heroku
+    if ENV["HEROKU_APP_NAME"] == "medlibra-stage"
       logger.info!
       logger.instance_variable_set(:@logdev, STDOUT)
     end
