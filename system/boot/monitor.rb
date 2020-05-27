@@ -10,7 +10,10 @@ Medlibra::Container.boot :monitor, namespace: true do |system|
   start do
     use :settings
 
-    logger.info!
+    if system.heroku
+      logger.info!
+      logger.instance_variable_set(:@logdev, STDOUT)
+    end
 
     notifications.register_event(:sql)
     Dry::Monitor::SQL::Logger.new(logger).subscribe(notifications)

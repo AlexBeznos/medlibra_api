@@ -13,6 +13,7 @@ module Medlibra
       config.listeners = true
       config.default_namespace = "medlibra"
       config.auto_register = %w[lib/medlibra]
+      config.heroku = ENV["HEROKU_APP_NAME"] == "medlibra-stage"
     end
 
     load_paths! "lib"
