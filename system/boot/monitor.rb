@@ -10,7 +10,7 @@ Medlibra::Container.boot :monitor, namespace: true do |system|
   start do
     use :settings
 
-    if system.heroku
+    if system.config.heroku
       logger.info!
       logger.instance_variable_set(:@logdev, STDOUT)
     end
