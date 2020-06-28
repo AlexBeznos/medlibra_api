@@ -199,7 +199,7 @@ module Fillers
     end
 
     def prep_subfield(name)
-      name.gsub(/\,\s\d+$/, "")
+      name.gsub(/,\s\d+$/, "")
     end
 
     def find_name(current, from)
