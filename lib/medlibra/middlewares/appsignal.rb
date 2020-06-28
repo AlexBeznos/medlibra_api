@@ -16,7 +16,7 @@ module Medlibra
 
       def make_endpoint_name(env)
         method = env["REQUEST_METHOD"]
-        path = env["REQUEST_PATH"].gsub(%r{/\d+}, "/:id")
+        path = env["PATH_INFO"].gsub(%r{/\d+}, "/:id")
 
         "#{method} #{path}"
       end
