@@ -58,7 +58,7 @@ namespace :db do
       uri = database_uri
       system(
         postgres_env_vars(uri),
-        "createdb #{Shellwords.escape(uri.path[1..-1])}",
+        "createdb #{Shellwords.escape(uri.path[1..])}",
       )
     else
       puts "You must have Postgres installed to create a database"
@@ -72,7 +72,7 @@ namespace :db do
       uri = database_uri
       system(
         postgres_env_vars(uri),
-        "dropdb #{Shellwords.escape(uri.path[1..-1])}",
+        "dropdb #{Shellwords.escape(uri.path[1..])}",
       )
     else
       puts "You must have Postgres installed to drop a database"
@@ -98,7 +98,7 @@ namespace :db do
         uri = database_uri
         system(
           postgres_env_vars(uri),
-          "pg_dump -s -x -O #{Shellwords.escape(uri.path[1..-1])}",
+          "pg_dump -s -x -O #{Shellwords.escape(uri.path[1..])}",
           out: "db/structure.sql",
         )
       else

@@ -57,36 +57,19 @@ module Medlibra
               year: year.name,
             }
               .merge(attempt_attributes(assessments))
-              .merge(find_exam(assessments))
               .merge(find_training(assessments))
           end
         end
 
-        def find_exam(assessments)
-          find_and_serializer_assessment(
-            assessments,
-            "training-exam",
-            "exam",
-          )
-        end
-
         def find_training(assessments)
-          find_and_serializer_assessment(
-            assessments,
-            "training",
-            "training",
-          )
-        end
-
-        def find_and_serializer_assessment(assessments, type, key)
           record = assessments.detect do |r|
-            r.type == ::Types::AssessmentTypes[type]
+            r.type == "training"
           end
 
-          return { key => nil } unless record
+          return { training: nil } unless record
 
           {
-            key => {
+            training: {
               id: record.id,
               amount: record.questions_amount,
             },

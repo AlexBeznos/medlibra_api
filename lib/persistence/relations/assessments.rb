@@ -31,12 +31,7 @@ module Persistence
       end
 
       def subfields_page(krok_id:, field_id:, subfield_id:)
-        types = [
-          ::Types::AssessmentTypes["training"],
-          ::Types::AssessmentTypes["training-exam"],
-        ]
-
-        where(type: types)
+        where(type: ::Types::AssessmentTypes["training"])
           .where(krok_id: krok_id)
           .where(field_id: field_id)
           .where(subfield_id: subfield_id)

@@ -41,14 +41,14 @@ module Medlibra
                     .split(/[\r\n]+/)
                     .find(&method(:cache_control_matcher))
 
-        exp_in = cache_str.match(/max\-age\=(\d+)\,/)
+        exp_in = cache_str.match(/max-age=(\d+),/)
         return unless exp_in
 
         Time.now.to_i + exp_in[1].to_i
       end
 
       def cache_control_matcher(str)
-        str.match(/(C|c)ache-(C|c)ontrol\:/)
+        str.match(/(C|c)ache-(C|c)ontrol:/)
       end
 
       def clear_and_fetch_keys
