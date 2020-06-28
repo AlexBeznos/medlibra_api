@@ -12,11 +12,15 @@ Medlibra::Container.boot :persistence, namespace: true do |system|
 
     Sequel.database_timezone = :utc
     Sequel.application_timezone = :local
+    Sequel::Database.register_extension(
+      :appsignal_integration,
+      Appsignal::Hooks::SequelLogConnectionExtension,
+    )
 
     rom_config = ROM::Configuration.new(
       :sql,
       system[:settings].database_url,
-      extensions: %i[error_sql pg_array pg_json newrelic_instrumentation],
+      extensions: %i[pg_array pg_json appsignal_integration],
     )
 
     rom_config.plugin :sql, relations: :instrumentation do |plugin_config|

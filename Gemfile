@@ -33,7 +33,7 @@ gem "jwt"
 gem "oj"
 
 # Monitoring
-gem "newrelic_rpm"
+gem "appsignal"
 gem "sentry-raven"
 
 group :development, :test do

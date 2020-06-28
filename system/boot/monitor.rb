@@ -3,8 +3,8 @@
 Medlibra::Container.boot :monitor, namespace: true do |system|
   init do
     require "dry/monitor/sql/logger"
+    require "appsignal"
     require "sentry-raven"
-    require "newrelic_rpm"
   end
 
   start do
@@ -23,6 +23,7 @@ Medlibra::Container.boot :monitor, namespace: true do |system|
     end
 
     register "sentry", Raven
+    register "appsignal", Appsignal
 
     system["rack_monitor"].on(:error) do |params|
       Raven.user_context(uid: params[:uid])

@@ -13,7 +13,8 @@ module Medlibra
 
     opts[:root] = Pathname(__FILE__).join("../..").realpath.dirname
 
-    use Container["middlewares.auth"].class
+    use Container["middlewares.appsignal"]
+    use Container["middlewares.auth"]
 
     plugin :error_handler
     plugin :json

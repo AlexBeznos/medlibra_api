@@ -31,6 +31,7 @@ Metrics/BlockLength:
     - "Rakefile"
     - "spec/**/*.rb"
     - "db/seed.rb"
+    - "system/boot/*.rb"
 
 Metrics/MethodLength:
   Exclude:
