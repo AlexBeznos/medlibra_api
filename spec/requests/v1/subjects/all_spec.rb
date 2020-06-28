@@ -38,19 +38,7 @@ RSpec.describe "v1/subjects/:id/all", type: :request do
         user_id: user.id,
         score: 0.2,
       ]
-      exam = Factory[
-        :assessment,
-        :training_exam,
-        krok: krok,
-        field: field,
-        year: year,
-        subfield: subfield,
-      ]
 
-      expected_exam = {
-        "id" => exam.id,
-        "amount" => exam.questions_amount,
-      }
       expected_training = {
         "id" => training.id,
         "amount" => training.questions_amount,
@@ -64,7 +52,6 @@ RSpec.describe "v1/subjects/:id/all", type: :request do
 
       expect(last_response.status).to eq(200)
       expect(parsed_body.count).to eq(1)
-      expect(parsed_body[0]["exam"]).to eq(expected_exam)
       expect(parsed_body[0]["training"]).to eq(expected_training)
       expect(parsed_body[0]["year"]).to eq(year.name)
       expect(parsed_body[0]["triesAmount"]).to eq(3)
