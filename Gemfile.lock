@@ -7,11 +7,12 @@ GEM
       rack
     ast (2.4.1)
     byebug (11.1.1)
-    codecov (0.1.17)
+    codecov (0.1.19)
+      colorize
       json
       simplecov
-      url
     coderay (1.1.2)
+    colorize (0.8.1)
     concurrent-ruby (1.1.6)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
@@ -106,7 +107,7 @@ GEM
     i18n (1.8.2)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
-    json (2.3.0)
+    json (2.3.1)
     jwt (2.2.1)
     listen (3.2.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
@@ -216,7 +217,6 @@ GEM
     thor (0.20.3)
     transproc (1.1.1)
     unicode-display_width (1.7.0)
-    url (0.3.2)
     webmock (3.8.3)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
