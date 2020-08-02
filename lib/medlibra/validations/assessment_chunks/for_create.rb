@@ -8,7 +8,7 @@ module Medlibra
     module AssessmentChunks
       class ForCreate < Dry::Validation::Contract
         json do
-          required(:chunk_size).value(:integer)
+          required(:chunk_size).value(:integer, lteq?: 30)
         end
       end
     end

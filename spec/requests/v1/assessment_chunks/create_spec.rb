@@ -62,6 +62,26 @@ RSpec.describe "v1/assessments/:assessment_id/chunks", type: :request do
         expect(last_response.status).to eq(422)
         expect(parsed_body.dig("errors", "chunk_size")).to eq(["must be an integer"])
       end
+
+      context "when chunk is too big" do
+        it "returns error" do
+          jwt_token, uid = make_jwt_token
+          Factory[:user, uid: uid]
+          assessment = Factory[:assessment, :exam]
+
+          make_request(
+            :post,
+            "v1/assessments/#{assessment.id}/chunks",
+            auth_code: jwt_token,
+            params: {
+              chunkSize: 32,
+            },
+          )
+
+          expect(last_response.status).to eq(422)
+          expect(parsed_body.dig("errors", "chunk_size")).to eq(["must be less than or equal to 30"])
+        end
+      end
     end
 
     context "when assessment is not exist" do

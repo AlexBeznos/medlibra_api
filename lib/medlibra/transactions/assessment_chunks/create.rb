@@ -64,18 +64,37 @@ module Medlibra
         end
 
         def persist_chunk(questions, user)
-          chunk_questions = questions.map do |q|
-            { question_id: q.id }
-          end
-
           chunk_params = {
             user_id: user.id,
             assessment_id: questions.first.assessment_id,
-            chunk_questions: chunk_questions,
           }
 
+          assessment_chunks_repo.transaction do
+            commit_chunk(chunk_params).tap do |chunk|
+              questions.each(&commit_chunk_question(chunk))
+            end
+          end
+        end
+
+        def commit_chunk_question(chunk)
+          lambda do |question|
+            chunk_questions_repo
+              .chunk_questions
+              .changeset(
+                :create,
+                question_id: question.id,
+                assessment_chunk_id: chunk.id,
+              )
+              .commit
+          end
+        end
+
+        def commit_chunk(params)
           assessment_chunks_repo
-            .create_with_questions(chunk_params)
+            .assessment_chunks
+            .changeset(:create, **params)
+            .map(:add_timestamps)
+            .commit
         end
 
         def prepare_response(chunks)
