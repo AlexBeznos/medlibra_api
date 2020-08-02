@@ -3,7 +3,7 @@
 require "web_spec_helper"
 
 RSpec.describe "v1/assessments/:assessment_id/questions", type: :request do
-  describe "#GET" do
+  describe "#POST" do
     it "returns questions" do
       jwt_token, uid = make_jwt_token
       user = Factory[:user, uid: uid]

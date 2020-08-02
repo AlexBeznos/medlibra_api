@@ -14,6 +14,8 @@ module Persistence
         associations do
           has_one :assessment_questions
           has_one :assessments, through: :assessment_questions
+          has_many :chunk_questions
+          has_many :assessment_chunks, through: :chunk_questions
           has_many :answers
           has_many :bookmarks
           belongs_to :subfield
@@ -30,6 +32,15 @@ module Persistence
           .order { id.asc }
           .limit(limit)
           .offset(offset)
+          .combine(:answers)
+          .combine(:subfield)
+          .combine(:bookmarks)
+          .node(:bookmarks) { |b| b.where(user_id: user_id) }
+      end
+
+      def chunks_page(chunk_id:, user_id:)
+        join(assessment_chunks)
+          .where(assessment_chunks[:id] => chunk_id)
           .combine(:answers)
           .combine(:subfield)
           .combine(:bookmarks)
