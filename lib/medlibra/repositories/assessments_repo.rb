@@ -19,6 +19,14 @@ module Medlibra
           .with_attempts_by_user(user_id: user_id)
           .to_a
       end
+
+      def by_id_for_chunks(id)
+        assessments
+          .combine(:questions)
+          .node(:questions) { |qr| qr.select(:id, :assessment_id) }
+          .where(id: id)
+          .one
+      end
     end
   end
 end
