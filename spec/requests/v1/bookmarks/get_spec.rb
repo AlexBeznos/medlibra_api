@@ -295,6 +295,24 @@ RSpec.describe "GET v1/bookmarks", type: :request do
       .to eq([question1.id])
   end
 
+  context "when limit too big" do
+    it "returns error" do
+      jwt_token, uid = make_jwt_token
+      Factory[:user, uid: uid]
+
+      make_request(
+        :get,
+        "v1/bookmarks",
+        auth_code: jwt_token,
+        params: { limit: 12, offset: 2 },
+      )
+
+      expect(last_response.status).to eq(422)
+      expect(parsed_body.dig("errors", "limit"))
+        .to eq(["must be less than or equal to 10"])
+    end
+  end
+
   context "when user is not created yet" do
     it "returns returns error" do
       jwt_token, = make_jwt_token
