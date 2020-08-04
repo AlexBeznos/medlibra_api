@@ -10,7 +10,7 @@ class Roda
       module RequestMethods
         include Dry::Monads[:result]
 
-        def resolve_with_handling(transaction, **params) # rubocop:disable AbcSize/MethodLength
+        def resolve_with_handling(transaction, **params) # rubocop:disable Metrics/MethodLength
           resolve(transaction) do |tr|
             result = with_instrument(transaction) { tr.(**params) }
 

@@ -11,6 +11,15 @@ Style/LambdaCall:
 Style/Documentation:
   Enabled: false
 
+Style/RedundantAssignment:
+  Enabled: true
+
+Style/AccessorGrouping:
+  Enabled: true
+
+Style/BisectedAttrAccessor:
+  Enabled: true
+
 Style/TrailingCommaInArguments:
   Enabled: true
   EnforcedStyleForMultiline: comma
@@ -98,4 +107,3 @@ Style/RedundantRegexpEscape:
 
 Style/SlicingWithRange:
   Enabled: true
-
