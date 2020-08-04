@@ -19,7 +19,7 @@ module Medlibra
           user = yield find_user.(uid)
           exams = get_exams(user)
 
-          Success(serialize_exams(exams))
+          Success([200, serialize_exams(exams)])
         end
 
         private

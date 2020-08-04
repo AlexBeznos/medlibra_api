@@ -21,7 +21,7 @@ module Medlibra
           chunk = yield find_chunk(user, id)
           questions = find_questions(user, chunk)
 
-          Success(serialize_questions(questions))
+          Success([200, serialize_questions(questions)])
         end
 
         private

@@ -56,7 +56,7 @@ RSpec.describe "v1/exams", type: :request do
         auth_code: jwt_token,
       )
 
-      expect(last_response).to be_successful
+      expect(last_response.status).to eq(200)
       expect(parsed_body.map { |d| d["id"] }).to eq(expected_ids)
       expect(parsed_body.map { |d| d["year"] }).to eq(expected_years)
       expect(parsed_body.map { |d| d["amount"] }).to eq(expected_amounts)

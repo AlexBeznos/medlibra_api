@@ -24,7 +24,7 @@ module Medlibra
           params = yield validate_params(params)
           chunks = persist_chunks(id, user, params)
 
-          Success(prepare_response(chunks))
+          Success([201, prepare_response(chunks)])
         end
 
         private

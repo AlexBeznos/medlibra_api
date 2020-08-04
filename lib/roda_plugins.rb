@@ -1,33 +1,31 @@
 # frozen_string_literal: true
 
 require "roda"
-require "dry/monads/unit"
+require "dry/monads"
 require "medlibra/container"
 
 class Roda
   module RodaPlugins
     module Resolver
       module RequestMethods
-        def resolve_with_handling(transaction, **params)
+        include Dry::Monads[:result]
+
+        def resolve_with_handling(transaction, **params) # rubocop:disable Metrics/MethodLength
           resolve(transaction) do |tr|
-            result = with_instrument("transaction.#{transaction}") { tr.(**params) }
+            result = with_instrument(transaction) { tr.(**params) }
 
-            if result.success?
-              success(result)
-            else
-              halt(422, errors: result.failure)
+            case result
+            in Success(Integer => code)
+              halt(code)
+            in Success[Integer => code, result]
+              halt(code, result)
+            in Success()
+              halt(201)
+            in Failure(errors)
+              halt(422, errors: errors)
+            in Failure()
+              halt(500)
             end
-          end
-        end
-
-        def success(result)
-          case result.success
-          when Dry::Monads::Unit
-            halt(201)
-          when Integer
-            halt(result.success)
-          else
-            halt(200, result.success)
           end
         end
 

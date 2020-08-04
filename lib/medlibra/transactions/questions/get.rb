@@ -29,7 +29,7 @@ module Medlibra
           meta = get_pagination_meta(id, params)
           questions = get_questions(user, id, **params)
 
-          Success(meta.merge(serialize_questions(questions)))
+          Success([200, meta.merge(serialize_questions(questions))])
         end
 
         private

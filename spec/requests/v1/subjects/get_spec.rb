@@ -48,7 +48,7 @@ RSpec.describe "v1/subjects", type: :request do
         auth_code: jwt_token,
       )
 
-      expect(last_response).to be_successful
+      expect(last_response.status).to eq(200)
       expect(parsed_body.map { |d| d["id"] }).to eq(expected_ids)
       expect(parsed_body.map { |d| d["name"] }).to eq(expected_names)
     end
