@@ -27,7 +27,7 @@ RSpec.describe "v1/assessments/:assessment_id/chunks", type: :request do
         },
       )
 
-      expect(last_response.status).to eq(200)
+      expect(last_response.status).to eq(201)
       expect(parsed_body.keys).to eq(["questionChunkIds"])
       chunk_ids = parsed_body["questionChunkIds"]
 

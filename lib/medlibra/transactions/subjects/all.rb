@@ -23,7 +23,7 @@ module Medlibra
 
           years_assessments = find_year_assessmets(user, id)
 
-          Success(serialize_year_assessments(years_assessments))
+          Success([200, serialize_year_assessments(years_assessments)])
         end
 
         private

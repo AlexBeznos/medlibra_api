@@ -5,7 +5,7 @@ require "web_spec_helper"
 
 RSpec.describe "POST v1/users", type: :request do
   context "when success" do
-    it "returns status 200" do
+    it "returns status 201" do
       params = { username: "@hello" }
       jwt_token, = make_jwt_token
 
@@ -16,7 +16,7 @@ RSpec.describe "POST v1/users", type: :request do
         params: params,
       )
 
-      expect(last_response).to be_successful
+      expect(last_response.status).to eq(201)
     end
 
     it "creates users record" do

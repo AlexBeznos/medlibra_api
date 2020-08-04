@@ -19,7 +19,7 @@ module Medlibra
           user = yield find_user.(uid)
           subjects = get_subjects(user)
 
-          Success(subjects.map(&:to_h))
+          Success([200, subjects.map(&:to_h)])
         end
 
         private

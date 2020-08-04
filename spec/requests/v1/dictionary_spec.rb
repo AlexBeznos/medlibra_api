@@ -57,7 +57,7 @@ RSpec.describe "v1/dictionary", type: :request do
         auth_code: jwt_token,
       )
 
-      expect(last_response).to be_successful
+      expect(last_response.status).to eq(200)
       expect(parsed_body).not_to be_empty
       expect(parsed_body).to eq(expected_result)
     end

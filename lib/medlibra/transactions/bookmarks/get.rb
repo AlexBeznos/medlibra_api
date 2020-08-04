@@ -26,7 +26,7 @@ module Medlibra
           meta = get_pagination_meta(user, params)
           questions = get_questions(user, **params)
 
-          Success(meta.merge(questions: questions))
+          Success([200, meta.merge(questions: questions)])
         end
 
         private
