@@ -7,7 +7,7 @@ GEM
       rack
     ast (2.4.1)
     byebug (11.1.1)
-    codecov (0.2.3)
+    codecov (0.2.6)
       colorize
       json
       simplecov
