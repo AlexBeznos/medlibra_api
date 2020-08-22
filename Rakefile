@@ -26,7 +26,7 @@ def database_uri
   URI.parse(settings.database_url)
 end
 
-def postgres_env_vars(uri)
+def postgres_env_vars(uri) # rubocop:disable Metrics/AbcSize
   {}.tap do |vars|
     vars["PGHOST"] = uri.host.to_s
     vars["PGPORT"] = uri.port.to_s if uri.port

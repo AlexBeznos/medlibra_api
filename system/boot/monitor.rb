@@ -12,7 +12,7 @@ Medlibra::Container.boot :monitor, namespace: true do |system|
 
     if ENV["HEROKU_APP_NAME"] == "medlibra-stage"
       logger.info!
-      logger.instance_variable_set(:@logdev, STDOUT)
+      logger.instance_variable_set(:@logdev, $stdout)
     end
 
     notifications.register_event(:sql)

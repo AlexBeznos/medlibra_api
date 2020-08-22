@@ -13,8 +13,8 @@ end
 
 SPEC_ROOT = Pathname(__FILE__).dirname
 
-Dir[SPEC_ROOT.join("support/*.rb").to_s].each(&method(:require))
-Dir[SPEC_ROOT.join("shared/*.rb").to_s].each(&method(:require))
+Dir[SPEC_ROOT.join("support/*.rb").to_s].sort.each(&method(:require))
+Dir[SPEC_ROOT.join("shared/*.rb").to_s].sort.each(&method(:require))
 
 require SPEC_ROOT.join("../system/medlibra/container")
 

@@ -31,10 +31,9 @@ class Roda
 
         private
 
-        def with_instrument(name)
-          Medlibra::Container["monitor.appsignal"].instrument(name) do
-            yield
-          end
+        def with_instrument(name, &block)
+          Medlibra::Container["monitor.appsignal"]
+            .instrument(name, &block)
         end
       end
     end

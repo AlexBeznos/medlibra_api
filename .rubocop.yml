@@ -32,8 +32,59 @@ Style/TrailingCommaInArrayLiteral:
   Enabled: true
   EnforcedStyleForMultiline: comma
 
-Lint/SuppressedException:
-  Enabled: false
+Style/ExponentialNotation:
+  Enabled: true
+
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
+
+Style/RedundantFetchBlock:
+  Enabled: true
+
+Style/RedundantRegexpCharacterClass:
+  Enabled: true
+
+Style/RedundantRegexpEscape:
+  Enabled: true
+
+Style/SlicingWithRange:
+  Enabled: true
+
+Style/ArrayCoercion:
+  Enabled: true
+
+Style/CaseLikeIf:
+  Enabled: true
+
+Style/ExplicitBlockArgument:
+  Enabled: true
+
+Style/GlobalStdStream:
+  Enabled: true
+
+Style/HashAsLastArrayItem:
+  Enabled: true
+
+Style/HashLikeCase:
+  Enabled: true
+
+Style/OptionalBooleanParameter:
+  Enabled: true
+
+Style/RedundantFileExtensionInRequire:
+  Enabled: true
+
+Style/SingleArgumentDig:
+  Enabled: true
+
+Style/StringConcatenation:
+  Enabled: true
 
 Metrics/BlockLength:
   Exclude:
@@ -57,19 +108,38 @@ Metrics/AbcSize:
     - "spec/**/*.rb"
     - "db/seed.rb"
 
-Layout/LineLength:
-  Exclude:
-    - "spec/**/*.rb"
-    - "db/seed.rb"
-
 Metrics/ParameterLists:
   Exclude:
     - "db/seed.rb"
 
-Layout/EmptyLinesAroundAttributeAccessor:
+Lint/SuppressedException:
+  Enabled: false
+
+Lint/DuplicateElsifCondition:
   Enabled: true
 
-Layout/SpaceAroundMethodCallOperator:
+Lint/DuplicateRescueException:
+  Enabled: true
+
+Lint/EmptyConditionalBody:
+  Enabled: true
+
+Lint/FloatComparison:
+  Enabled: true
+
+Lint/MissingSuper:
+  Enabled: true
+
+Lint/OutOfRangeRegexpRef:
+  Enabled: true
+
+Lint/TopLevelReturnWithArgument:
+  Enabled: true
+
+Lint/UnreachableLoop:
+  Enabled: true
+
+Lint/BinaryOperatorWithIdenticalOperands:
   Enabled: true
 
 Lint/DeprecatedOpenSSLConstant:
@@ -84,26 +154,13 @@ Lint/RaiseException:
 Lint/StructNewOverride:
   Enabled: true
 
-Style/ExponentialNotation:
+Layout/LineLength:
+  Exclude:
+    - "spec/**/*.rb"
+    - "db/seed.rb"
+
+Layout/EmptyLinesAroundAttributeAccessor:
   Enabled: true
 
-Style/HashEachMethods:
-  Enabled: true
-
-Style/HashTransformKeys:
-  Enabled: true
-
-Style/HashTransformValues:
-  Enabled: true
-
-Style/RedundantFetchBlock:
-  Enabled: true
-
-Style/RedundantRegexpCharacterClass:
-  Enabled: true
-
-Style/RedundantRegexpEscape:
-  Enabled: true
-
-Style/SlicingWithRange:
+Layout/SpaceAroundMethodCallOperator:
   Enabled: true
