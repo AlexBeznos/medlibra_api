@@ -3,7 +3,7 @@ GEM
   specs:
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
-    appsignal (2.10.12)
+    appsignal (2.11.0)
       rack
     ast (2.4.1)
     bigdecimal (2.0.0)
