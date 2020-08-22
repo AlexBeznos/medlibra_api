@@ -8,4 +8,5 @@ Factory = ROM::Factory.configure do |config|
 end
 
 Dir[Pathname(__FILE__).dirname.join("../../factories/**/*.rb")]
+  .sort
   .each(&method(:require))

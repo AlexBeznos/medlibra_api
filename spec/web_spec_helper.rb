@@ -4,8 +4,8 @@ require_relative "db_spec_helper"
 
 require "rack/test"
 
-Dir[SPEC_ROOT.join("support/web/*.rb").to_s].each(&method(:require))
-Dir[SPEC_ROOT.join("shared/web/*.rb").to_s].each(&method(:require))
+Dir[SPEC_ROOT.join("support/web/*.rb").to_s].sort.each(&method(:require))
+Dir[SPEC_ROOT.join("shared/web/*.rb").to_s].sort.each(&method(:require))
 
 require SPEC_ROOT.join("../system/boot").realpath
 
