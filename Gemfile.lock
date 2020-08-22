@@ -6,6 +6,7 @@ GEM
     appsignal (2.10.12)
       rack
     ast (2.4.1)
+    bigdecimal (2.0.0)
     byebug (11.1.1)
     codecov (0.2.3)
       colorize
@@ -115,7 +116,8 @@ GEM
     method_source (1.0.0)
     multipart-post (2.1.1)
     nio4r (2.5.2)
-    oj (3.10.8)
+    oj (3.10.12)
+      bigdecimal (>= 1.0, < 3)
     parallel (1.19.2)
     parser (2.7.1.4)
       ast (~> 2.4.1)
