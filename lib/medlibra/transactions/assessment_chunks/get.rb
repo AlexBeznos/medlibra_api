@@ -45,20 +45,24 @@ module Medlibra
             .to_a
         end
 
-        def serialize_questions(questions) # rubocop:disable Metrics/MethodLength
+        def serialize_questions(questions)
           questions.map do |question|
             {
               id: question.id,
               title: question.title,
               bookmarked: question.bookmarks.any?,
               subject: serialize_subfield(question.subfield),
-              answers: question.answers.map do |answer|
-                {
-                  id: answer.id,
-                  title: answer.title,
-                  isCorrect: answer.correct,
-                }
-              end,
+              answers: serialize_answers(question.answers),
+            }
+          end
+        end
+
+        def serialize_answers(answers)
+          answers.map do |answer|
+            {
+              id: answer.id,
+              title: answer.title,
+              isCorrect: answer.correct,
             }
           end
         end
