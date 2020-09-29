@@ -32,6 +32,9 @@ gem "dry-validation"
 gem "jwt"
 gem "oj"
 
+# Caching
+gem "redis"
+
 # Monitoring
 gem "appsignal"
 gem "sentry-raven"
