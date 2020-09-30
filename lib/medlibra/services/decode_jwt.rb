@@ -15,12 +15,13 @@ module Medlibra
       ]
 
       def call(token)
-        return unless valid_token?(token)
+        payload, header = jwt.decode(token, nil, false, JWT_ALG)
+
+        return unless valid_token_data?(payload, header)
 
         cert = fetch_jwt_key.(header["kid"])
-        return unless cert
 
-        jwt.decode(token, public_key(cert), true, JWT_ALG)
+        jwt.decode(token, public_key(cert), true, JWT_ALG) if cert
       rescue JWT::DecodeError
         false
       end
@@ -33,9 +34,7 @@ module Medlibra
           .public_key
       end
 
-      def valid_token?(token)
-        payload, header = jwt.decode(token, nil, false, JWT_ALG)
-
+      def valid_token_data?(payload, header)
         return false unless valid_header?(header)
         return false unless valid_payload?(payload)
 
