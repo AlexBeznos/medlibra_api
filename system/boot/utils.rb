@@ -8,7 +8,6 @@ Medlibra::Container.boot :utils, namespace: true do |system|
     require "curb"
     require "oj"
     require "redis"
-
   end
 
   start do
