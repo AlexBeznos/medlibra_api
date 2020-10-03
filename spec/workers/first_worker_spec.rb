@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require "workers_spec_helper"
 require "medlibra/workers/first_worker"
 
 RSpec.describe Medlibra::Workers::FirstWorker do
