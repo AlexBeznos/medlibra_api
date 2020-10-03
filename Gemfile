@@ -58,7 +58,7 @@ group :test do
   gem "rack-test"
   gem "rom-factory", "~> 0.10"
   gem "rspec"
+  gem "rspec-sidekiq"
   gem "simplecov", require: false
   gem "webmock"
-  gem "rspec-sidekiq"
 end
