@@ -8,6 +8,15 @@ RSpec.describe Medlibra::Workers::FirstWorker do
     uid = SecureRandom.hex
     Factory[:user, uid: uid]
 
+    described_class.perform_async(uid)
+
+    expect(described_class).to have_enqueued_job(uid)
+  end
+
+  it "runs logic inside worker" do
+    uid = SecureRandom.hex
+    Factory[:user, uid: uid]
+
     users_repo = instance_double(Medlibra::Repositories::UsersRepo)
     Medlibra::Container.stub("repositories.users_repo", users_repo)
 
