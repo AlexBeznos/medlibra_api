@@ -39,6 +39,7 @@ blocks:
           - bundle exec rubocop
         - name: rspec
           commands:
-          - sem-service start postgres 11
-          - bundle exec rake db:drop db:create db:migrate  
-          - bundle exec rake
+            - sem-service start redis
+            - sem-service start postgres 11
+            - bundle exec rake db:drop db:create db:migrate
+            - bundle exec rake

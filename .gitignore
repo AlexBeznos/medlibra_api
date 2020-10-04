@@ -20,3 +20,4 @@ coverage/*
 # Backups
 backup.sql
 backup-full.sql
+dump.rdb

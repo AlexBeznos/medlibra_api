@@ -14,25 +14,32 @@ module Medlibra
         validate_payload: "validations.jwt.payload",
       ]
 
-      def call(token) # rubocop:disable Metrics/MethodLength
+      def call(token)
         payload, header = jwt.decode(token, nil, false, JWT_ALG)
 
-        return unless valid_header?(header)
-        return unless valid_payload?(payload)
+        return unless valid_token_data?(payload, header)
 
         cert = fetch_jwt_key.(header["kid"])
-        return unless cert
 
-        public_key = OpenSSL::X509::Certificate
-                     .new(cert)
-                     .public_key
-
-        jwt.decode(token, public_key, true, JWT_ALG)
+        jwt.decode(token, public_key(cert), true, JWT_ALG) if cert
       rescue JWT::DecodeError
         false
       end
 
       private
+
+      def public_key(cert)
+        OpenSSL::X509::Certificate
+          .new(cert)
+          .public_key
+      end
+
+      def valid_token_data?(payload, header)
+        return false unless valid_header?(header)
+        return false unless valid_payload?(payload)
+
+        true
+      end
 
       def valid_header?(header)
         validate_header

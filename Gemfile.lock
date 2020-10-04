@@ -7,7 +7,7 @@ GEM
       rack
     ast (2.4.1)
     byebug (11.1.1)
-    codecov (0.2.9)
+    codecov (0.2.11)
       json
       simplecov
     coderay (1.1.2)
@@ -50,7 +50,7 @@ GEM
       dry-core (~> 0.4)
       dry-equalizer (~> 0.2)
       dry-events (~> 0.1)
-    dry-schema (1.5.3)
+    dry-schema (1.5.4)
       concurrent-ruby (~> 1.0)
       dry-configurable (~> 0.8, >= 0.8.3)
       dry-core (~> 0.4)
@@ -79,13 +79,13 @@ GEM
       dry-equalizer (~> 0.3)
       dry-inflector (~> 0.1, >= 0.1.2)
       dry-logic (~> 1.0, >= 1.0.2)
-    dry-validation (1.5.4)
+    dry-validation (1.5.6)
       concurrent-ruby (~> 1.0)
       dry-container (~> 0.7, >= 0.7.1)
       dry-core (~> 0.4)
       dry-equalizer (~> 0.2)
       dry-initializer (~> 3.0)
-      dry-schema (~> 1.5)
+      dry-schema (~> 1.5, >= 1.5.2)
     dry-web (0.8.0)
       dry-monitor (~> 0.1)
       dry-system (~> 0.9)
@@ -112,7 +112,7 @@ GEM
     method_source (1.0.0)
     multipart-post (2.1.1)
     nio4r (2.5.4)
-    oj (3.10.13)
+    oj (3.10.14)
     parallel (1.19.2)
     parser (2.7.1.5)
       ast (~> 2.4.1)
@@ -124,7 +124,7 @@ GEM
       byebug (~> 11.0)
       pry (~> 0.13.0)
     public_suffix (4.0.6)
-    puma (5.0.0)
+    puma (5.0.2)
       nio4r (~> 2.0)
     rack (2.2.3)
     rack-test (1.1.0)
@@ -136,6 +136,7 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    redis (4.2.2)
     regexp_parser (1.8.0)
     rerun (0.13.0)
       listen (~> 3.0)
@@ -246,6 +247,7 @@ DEPENDENCIES
   rack-test
   rack_csrf
   rake
+  redis
   rerun
   rom (~> 5.2)
   rom-factory (~> 0.10)
