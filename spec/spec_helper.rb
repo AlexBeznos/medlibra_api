@@ -4,6 +4,7 @@ ENV["RACK_ENV"] = "test"
 
 require "pry-byebug"
 require "simplecov"
+
 SimpleCov.start
 
 if ENV["CI"]
@@ -21,6 +22,8 @@ require SPEC_ROOT.join("../system/medlibra/container")
 require "webmock/rspec"
 require "dry/container/stub"
 Medlibra::Container.enable_stubs!
+
+require "rspec-sidekiq"
 
 RSpec.configure do |config|
   config.disable_monkey_patching!
@@ -66,6 +69,10 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = :random
+
+  config.before(:each) do
+    Sidekiq::Worker.clear_all
+  end
 
   # Seed global randomization in this process using the `--seed` CLI option.
   # Setting this allows you to use `--seed` to deterministically reproduce

@@ -21,6 +21,9 @@ gem "rom", "~> 5.2"
 gem "rom-sql", "~> 3.1"
 gem "sequel_postgresql_triggers"
 
+# Background jobs
+gem "sidekiq"
+
 # Application dependencies
 gem "concurrent-ruby"
 gem "curb"
@@ -55,6 +58,7 @@ group :test do
   gem "rack-test"
   gem "rom-factory", "~> 0.10"
   gem "rspec"
+  gem "rspec-sidekiq"
   gem "simplecov", require: false
   gem "webmock"
 end
