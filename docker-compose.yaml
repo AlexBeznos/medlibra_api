@@ -1,0 +1,30 @@
+version: '3.7'
+
+services:
+  api:
+    container_name: medlibra-api-container
+    build:
+      context: .
+    entrypoint:
+      ["bundle", "exec", "puma", "-t", "0:16", "-e", "production", "-p", "${PORT}"]
+    ports:
+      - ${PORT}:${PORT}
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      SESSION_SECRET: ${SESSION_SECRET}
+      FIREBASE_PROJECT_ID: ${FIREBASE_PROJECT_ID}
+      SENTRY_DSN: ${SENTRY_DSN}
+      REDIS_URL: ${REDIS_URL}
+      PORT: ${PORT}
+  redis:
+    image: 'redis@sha256:096cff9e6024603decb2915ea3e501c63c5bb241e1b56830a52acfd488873843'
+    container_name: medlibra-redis-container
+  postgres:
+    image: 'postgres@sha256:1dfcbfea3e85ad81b7baef84a68c8d8f8676a6b400d1ff0790929bfe1bd6d9df'
+    container_name: medlibra-postgres-container
+    volumes:
+    - ./db/structure.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: 'trust'
+      POSTGRES_USER: 'root'
+      POSTGRES_DB: 'medlibra_prod'
